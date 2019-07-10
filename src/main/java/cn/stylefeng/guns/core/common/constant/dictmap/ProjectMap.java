@@ -29,7 +29,7 @@ public class ProjectMap extends AbstractDictMap {
     public void init() {
         put("projectId", "项目id");
         put("title", "名称");
-        put("provinceName", "s所属省市");
+        put("provinceName", "所属省市");
     }
 
     @Override

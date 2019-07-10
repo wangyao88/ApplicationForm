@@ -11,7 +11,7 @@
         <result column="application_form_type_id" property="applicationFormTypeId" />
         <result column="application_time" property="applicationTime" />
         <result column="application_user" property="applicationUser" />
-        <result column="receive_time" property="createTime" />
+        <result column="receive_time" property="receiveTime" />
         <result column="receive_user" property="receiveUser" />
         <result column="create_time" property="createTime" />
         <result column="create_user" property="createUser" />
@@ -20,19 +20,22 @@
     </resultMap>
 
     <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
+    <sql id="Simple_Column_List">
+        application_form_id AS "applicationFormId", project_id AS "projectId", application_form_type_id AS "applicationFormTypeId",
+        application_time AS "applicationTime", application_user AS "applicationUser", receive_time AS "receiveTime", receive_user AS "receiveUser"
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="All_Column_List">
         application_form_id AS "applicationFormId", project_id AS "projectId", description AS "description", use AS "use",
         application_form_type_id AS "applicationFormTypeId", application_time AS "applicationTime", application_user AS "applicationUser",
-        receive_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser"
+        receive_time AS "receiveTime", receive_user AS "receiveUser", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser"
     </sql>
 
     <select id="list" resultType="map">
         select
-        <include refid="Base_Column_List"></include>
-        from business_project
-        <if test="condition != null and condition != ''">
-            where title like CONCAT('%',#{condition},'%')
-        </if>
+        <include refid="Simple_Column_List"></include>
+        from business_application_form
         order by create_time DESC
     </select>
 

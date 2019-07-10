@@ -72,7 +72,7 @@ public class ApplicationForm implements Serializable {
      * 接收时间
      */
     @TableField(value = "receive_time", fill = FieldFill.INSERT)
-    private Date creceiveTime;
+    private Date receiveTime;
 
     /**
      * 创建时间
