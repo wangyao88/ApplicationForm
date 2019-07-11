@@ -28,4 +28,7 @@
         order by create_time DESC
     </select>
 
+    <select id="allProject" resultType="cn.stylefeng.guns.modular.business.model.ProjectSimpleDto">
+        select project_id AS "projectId", title AS "title" from business_project order by create_time DESC
+    </select>
 </mapper>

@@ -7,6 +7,8 @@ import cn.stylefeng.guns.core.common.page.LayuiPageFactory;
 import cn.stylefeng.guns.core.common.page.LayuiPageInfo;
 import cn.stylefeng.guns.modular.system.entity.Dict;
 import cn.stylefeng.guns.modular.system.mapper.DictMapper;
+import cn.stylefeng.guns.modular.system.mapper.DictTypeMapper;
+import cn.stylefeng.guns.modular.system.model.DictDto;
 import cn.stylefeng.guns.modular.system.model.params.DictParam;
 import cn.stylefeng.guns.modular.system.model.result.DictResult;
 import cn.stylefeng.roses.core.util.ToolUtil;
@@ -15,6 +17,7 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -31,6 +34,9 @@ import java.util.List;
  */
 @Service
 public class DictService extends ServiceImpl<DictMapper, Dict> {
+
+    @Autowired
+    private DictTypeMapper dictTypeMapper;
 
     /**
      * 新增
@@ -272,5 +278,10 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
                 param.setParentIds(parent.getParentIds() + "," + "[" + parentId + "]");
             }
         }
+    }
+
+    public List<DictDto> allDict(String typeCode) {
+        Long typeId = dictTypeMapper.getIdByCode(typeCode);
+        return this.baseMapper.getDictByTypeId(typeId);
     }
 }

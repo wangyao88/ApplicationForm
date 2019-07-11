@@ -2,6 +2,7 @@ package cn.stylefeng.guns.modular.system.mapper;
 
 import cn.stylefeng.guns.core.common.node.ZTreeNode;
 import cn.stylefeng.guns.modular.system.entity.Dict;
+import cn.stylefeng.guns.modular.system.model.DictDto;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,4 +27,6 @@ public interface DictMapper extends BaseMapper<Dict> {
      * where parentIds like ''
      */
     List<Dict> likeParentIds(@Param("dictId") Long dictId);
+
+    List<DictDto> getDictByTypeId(@Param("typeId") Long typeId);
 }

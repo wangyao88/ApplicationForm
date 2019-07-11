@@ -29,6 +29,7 @@ import cn.stylefeng.guns.modular.business.entity.ApplicationForm;
 import cn.stylefeng.guns.modular.business.model.ApplicationFormDto;
 import cn.stylefeng.guns.modular.business.service.ApplicationFormService;
 import cn.stylefeng.guns.modular.business.warpper.ApplicationFormWrapper;
+import cn.stylefeng.guns.modular.system.entity.User;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
@@ -93,7 +94,6 @@ public class ApplicationFormController extends BaseController {
         if (ToolUtil.isEmpty(applicationFormId)) {
             throw new RequestEmptyException();
         }
-        //缓存省市修改前详细信息
         ApplicationForm applicationForm = this.applicationFormService.getById(applicationFormId);
         LogObjectHolder.me().set(applicationForm);
         return PREFIX + "applicationForm_edit.html";
@@ -112,7 +112,16 @@ public class ApplicationFormController extends BaseController {
         ApplicationForm applicationForm = this.applicationFormService.getById(applicationFormId);
         ApplicationFormDto applicationFormDto = new ApplicationFormDto();
         BeanUtil.copyProperties(applicationForm, applicationFormDto);
-        applicationFormDto.setProvinceName(ConstantFactory.me().getProvinceName(applicationFormDto.getProvinceId()));
+        applicationFormDto.setApplicationUserName(ConstantFactory.me().getUserNameById(applicationFormDto.getApplicationUser()));
+        applicationFormDto.setReceiveUserName(ConstantFactory.me().getUserNameById(applicationFormDto.getReceiveUser()));
+        User applicationUser = ConstantFactory.me().getUser(applicationFormDto.getApplicationUser());
+        Long deptId = applicationUser.getDeptId();
+        applicationFormDto.setApplicationUserDeptName(ConstantFactory.me().getDeptName(deptId));
+        applicationFormDto.setApplicationUserEmail(applicationUser.getEmail());
+        applicationFormDto.setApplicationUserPhone(applicationUser.getPhone());
+        applicationFormDto.setCreateUserName(ConstantFactory.me().getUserNameById(applicationFormDto.getApplicationUser()));
+        applicationFormDto.setProjectTitle(ConstantFactory.me().getProjectTitle(applicationFormDto.getApplicationUser()));
+        applicationFormDto.setApplicationFormTypeName(ConstantFactory.me().getDictName(applicationFormDto.getApplicationFormTypeId()));
         return applicationFormDto;
     }
 
@@ -138,14 +147,13 @@ public class ApplicationFormController extends BaseController {
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    @BussinessLog(value = "新增申请单", key = "title", dict = ApplicationFormMap.class)
+    @BussinessLog(value = "新增申请单", key = "applicationFormId", dict = ApplicationFormMap.class)
     public Object add(ApplicationForm applicationForm) {
-        if (ToolUtil.isOneEmpty(applicationForm, applicationForm.getProjectId(), applicationForm.getApplicationUser())) {
+        if (ToolUtil.isOneEmpty(applicationForm, applicationForm.getProjectId(), applicationForm.getDescription(), applicationForm.getUse())) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
         }
         applicationForm.setCreateUser(ShiroKit.getUserNotNull().getId());
         applicationForm.setCreateTime(new Date());
-        applicationForm.setApplicationTime(new Date());
         this.applicationFormService.save(applicationForm);
         return SUCCESS_TIP;
     }
@@ -172,14 +180,22 @@ public class ApplicationFormController extends BaseController {
      */
     @RequestMapping(value = "/update")
     @ResponseBody
-    @BussinessLog(value = "修改申请单", key = "title", dict = ApplicationFormMap.class)
+    @BussinessLog(value = "修改申请单", key = "applicationFormId", dict = ApplicationFormMap.class)
     public Object update(ApplicationForm applicationForm) {
-        if (ToolUtil.isOneEmpty(applicationForm, applicationForm.getApplicationFormId(), applicationForm.getProjectId(), applicationForm.getProvinceId())) {
+        if (ToolUtil.isOneEmpty(applicationForm, applicationForm.getApplicationFormId(), applicationForm.getProjectId(), applicationForm.getDescription(), applicationForm.getUse())) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
         }
         ApplicationForm old = this.applicationFormService.getById(applicationForm.getApplicationFormId());
-        old.setTitle(applicationForm.getTitle());
-        old.setProvinceId(applicationForm.getProvinceId());
+        old.setApplicationFormTypeId(applicationForm.getApplicationFormTypeId());
+        old.setProjectId(applicationForm.getProjectId());
+        old.setApplicationUser(applicationForm.getApplicationUser());
+        old.setApplicationTime(applicationForm.getApplicationTime());
+        old.setDescription(applicationForm.getDescription());
+        old.setUse(applicationForm.getUse());
+        old.setReceiveUser(applicationForm.getReceiveUser());
+        old.setReceiveTime(applicationForm.getReceiveTime());
+        old.setUpdateUser(ShiroKit.getUserNotNull().getId());
+        old.setUpdateTime(new Date());
         this.applicationFormService.updateById(old);
         return SUCCESS_TIP;
     }

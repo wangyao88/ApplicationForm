@@ -17,6 +17,7 @@ package cn.stylefeng.guns.modular.business.warpper;
 
 import cn.stylefeng.guns.core.common.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.core.util.DecimalUtil;
+import cn.stylefeng.guns.modular.system.entity.User;
 import cn.stylefeng.roses.core.base.warpper.BaseControllerWrapper;
 import cn.stylefeng.roses.kernel.model.page.PageResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -50,15 +51,14 @@ public class ApplicationFormWrapper extends BaseControllerWrapper {
 
     @Override
     protected void wrapTheMap(Map<String, Object> map) {
-        Long applicationUser = DecimalUtil.getLong(map.get("applicationUser"));
-        map.put("applicationUserName", ConstantFactory.me().getUserNameById(applicationUser));
-
+        Long applicationUserId = DecimalUtil.getLong(map.get("applicationUser"));
+        User applicationUser = ConstantFactory.me().getUser(applicationUserId);
+        map.put("applicationUserName", applicationUser.getName());
+        map.put("applicationUserDeptName", ConstantFactory.me().getDeptName(applicationUser.getDeptId()));
+        map.put("applicationUserEmail", applicationUser.getEmail());
+        map.put("applicationUserPhone", applicationUser.getPhone());
         Long receiveUser = DecimalUtil.getLong(map.get("receiveUser"));
         map.put("receiveUserName", ConstantFactory.me().getUserNameById(receiveUser));
-
-        Long creater = DecimalUtil.getLong(map.get("createUser"));
-        map.put("createrName", ConstantFactory.me().getUserNameById(creater));
-
         Long projectId = DecimalUtil.getLong(map.get("projectId"));
         map.put("projectTitle", ConstantFactory.me().getProjectTitle(projectId));
     }

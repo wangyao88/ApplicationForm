@@ -45,4 +45,7 @@
         </if>
     </select>
 
+    <select id="getDictByTypeId" resultType="cn.stylefeng.guns.modular.system.model.DictDto">
+        select dict_id AS "dictId", name AS "name" from sys_dict where dict_type_id = #{typeId}
+    </select>
 </mapper>

@@ -2,6 +2,7 @@ package cn.stylefeng.guns.modular.system.mapper;
 
 import cn.stylefeng.guns.modular.system.entity.DictType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface DictTypeMapper extends BaseMapper<DictType> {
 
+    Long getIdByCode(@Param("code") String typeCode);
 }

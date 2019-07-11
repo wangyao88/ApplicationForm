@@ -17,6 +17,8 @@ package cn.stylefeng.guns.core.common.constant.factory;
 
 import cn.stylefeng.guns.modular.system.entity.Dict;
 import cn.stylefeng.guns.modular.system.entity.Menu;
+import cn.stylefeng.guns.modular.system.entity.User;
+import cn.stylefeng.guns.modular.system.model.DictDto;
 
 import java.util.List;
 
@@ -35,6 +37,14 @@ public interface IConstantFactory {
      * @Date 2017/5/9 23:41
      */
     String getUserNameById(Long userId);
+
+    /**
+     * 根据用户id获取用户
+     *
+     * @author stylefeng
+     * @Date 2017/5/9 23:41
+     */
+    User getUser(Long userId);
 
     /**
      * 根据用户id获取用户账号
@@ -145,4 +155,6 @@ public interface IConstantFactory {
     List<Long> getParentDeptIds(Long deptId);
 
     String getProjectTitle(Long projectId);
+
+    List<DictDto> getDictByTypeCode(String typeCode);
 }

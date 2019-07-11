@@ -193,7 +193,7 @@ public class ProvinceController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 4:57 PM
      */
-    @BussinessLog(value = "修改省市", key = "simpleName", dict = ProvinceDict.class)
+    @BussinessLog(value = "修改省市", key = "provinceId", dict = ProvinceDict.class)
     @RequestMapping(value = "/update")
     @Permission
     @ResponseBody

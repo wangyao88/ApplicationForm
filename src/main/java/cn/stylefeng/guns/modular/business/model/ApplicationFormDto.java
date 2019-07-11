@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.modular.business.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -64,8 +65,24 @@ public class ApplicationFormDto implements Serializable {
     private String applicationUserName;
 
     /**
+     * 申请人部门
+     */
+    private String applicationUserDeptName;
+
+    /**
+     * 申请人邮箱
+     */
+    private String applicationUserEmail;
+
+    /**
+     * 申请人电话
+     */
+    private String applicationUserPhone;
+
+    /**
      * 申请时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date applicationTime;
 
     /**
@@ -81,11 +98,13 @@ public class ApplicationFormDto implements Serializable {
     /**
      * 接收时间
      */
-    private Date creceiveTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date receiveTime;
 
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
     /**

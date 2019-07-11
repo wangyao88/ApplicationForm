@@ -4,6 +4,7 @@ import cn.stylefeng.guns.core.common.node.ZTreeNode;
 import cn.stylefeng.guns.core.common.page.LayuiPageInfo;
 import cn.stylefeng.guns.modular.system.entity.Dict;
 import cn.stylefeng.guns.modular.system.entity.DictType;
+import cn.stylefeng.guns.modular.system.model.DictDto;
 import cn.stylefeng.guns.modular.system.model.params.DictParam;
 import cn.stylefeng.guns.modular.system.model.result.DictResult;
 import cn.stylefeng.guns.modular.system.service.DictService;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -180,6 +182,12 @@ public class DictController extends BaseController {
     @ResponseBody
     public List<ZTreeNode> ztree(@RequestParam("dictTypeId") Long dictTypeId, @RequestParam(value = "dictId", required = false) Long dictId) {
         return this.dictService.dictTreeList(dictTypeId, dictId);
+    }
+
+    @RequestMapping(value="/allDict", method = RequestMethod.GET)
+    @ResponseBody
+    public List<DictDto> allDict(){
+        return dictService.allDict("APPLICATION_FORM_TYPE");
     }
 
 }

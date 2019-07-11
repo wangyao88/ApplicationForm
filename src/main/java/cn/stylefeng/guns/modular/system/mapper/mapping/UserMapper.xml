@@ -70,4 +70,8 @@
         from sys_user where account = #{account} and status != 'DELETED'
     </select>
 
+    <select id="allUser" resultType="cn.stylefeng.guns.modular.system.model.UserSimpleDto">
+        select user_id AS "userId", name AS "name"  from sys_user where status != 'DELETED'
+    </select>
+
 </mapper>

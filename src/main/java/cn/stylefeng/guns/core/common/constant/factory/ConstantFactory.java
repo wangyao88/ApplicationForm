@@ -28,6 +28,7 @@ import cn.stylefeng.guns.modular.business.mapper.ProjectMapper;
 import cn.stylefeng.guns.modular.business.mapper.ProvinceMapper;
 import cn.stylefeng.guns.modular.system.entity.*;
 import cn.stylefeng.guns.modular.system.mapper.*;
+import cn.stylefeng.guns.modular.system.model.DictDto;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -71,6 +72,11 @@ public class ConstantFactory implements IConstantFactory {
         } else {
             return "--";
         }
+    }
+
+    @Override
+    public User getUser(Long userId) {
+        return userMapper.selectById(userId);
     }
 
     @Override
@@ -364,5 +370,11 @@ public class ConstantFactory implements IConstantFactory {
                 return project.getTitle();
             }
         }
+    }
+
+    @Override
+    public List<DictDto> getDictByTypeCode(String typeCode) {
+        Long typeId = dictTypeMapper.getIdByCode(typeCode);
+        return dictMapper.getDictByTypeId(typeId);
     }
 }

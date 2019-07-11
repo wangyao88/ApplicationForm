@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.modular.system.mapper;
 
 import cn.stylefeng.guns.modular.system.entity.User;
+import cn.stylefeng.guns.modular.system.model.UserSimpleDto;
 import cn.stylefeng.roses.core.datascope.DataScope;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -44,4 +45,5 @@ public interface UserMapper extends BaseMapper<User> {
      */
     User getByAccount(@Param("account") String account);
 
+    List<UserSimpleDto> allUser();
 }

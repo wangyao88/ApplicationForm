@@ -2,6 +2,7 @@ package cn.stylefeng.guns.modular.system.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.stylefeng.guns.core.common.constant.Const;
+import cn.stylefeng.guns.core.common.constant.SearchComplete;
 import cn.stylefeng.guns.core.common.constant.state.ManagerStatus;
 import cn.stylefeng.guns.core.common.exception.BizExceptionEnum;
 import cn.stylefeng.guns.core.common.node.MenuNode;
@@ -14,10 +15,13 @@ import cn.stylefeng.guns.modular.system.entity.User;
 import cn.stylefeng.guns.modular.system.factory.UserFactory;
 import cn.stylefeng.guns.modular.system.mapper.UserMapper;
 import cn.stylefeng.guns.modular.system.model.UserDto;
+import cn.stylefeng.guns.modular.system.model.UserSimpleDto;
 import cn.stylefeng.roses.core.datascope.DataScope;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +42,10 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     @Autowired
     private MenuService menuService;
-
     @Autowired
     private UserAuthService userAuthService;
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 添加用戶
@@ -216,4 +221,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         BeanUtil.copyProperties(shiroUser, lastUser);
     }
 
+    public List<UserSimpleDto> allUser() {
+        return userMapper.allUser();
+    }
 }

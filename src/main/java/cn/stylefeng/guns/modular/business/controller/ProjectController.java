@@ -28,9 +28,11 @@ import cn.stylefeng.guns.core.shiro.ShiroKit;
 import cn.stylefeng.guns.modular.business.entity.Project;
 import cn.stylefeng.guns.modular.business.entity.Province;
 import cn.stylefeng.guns.modular.business.model.ProjectDto;
+import cn.stylefeng.guns.modular.business.model.ProjectSimpleDto;
 import cn.stylefeng.guns.modular.business.model.ProvinceDto;
 import cn.stylefeng.guns.modular.business.service.ProjectService;
 import cn.stylefeng.guns.modular.business.warpper.ProjectWrapper;
+import cn.stylefeng.guns.modular.system.model.UserSimpleDto;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
@@ -38,12 +40,10 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -140,7 +140,7 @@ public class ProjectController extends BaseController {
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    @BussinessLog(value = "新增项目", key = "title", dict = ProjectMap.class)
+    @BussinessLog(value = "新增项目", key = "projectId", dict = ProjectMap.class)
     public Object add(Project project) {
         if (ToolUtil.isOneEmpty(project, project.getTitle(), project.getProvinceId())) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
@@ -175,7 +175,7 @@ public class ProjectController extends BaseController {
      */
     @RequestMapping(value = "/update")
     @ResponseBody
-    @BussinessLog(value = "修改项目", key = "title", dict = ProjectMap.class)
+    @BussinessLog(value = "修改项目", key = "projectId", dict = ProjectMap.class)
     public Object update(Project project) {
         if (ToolUtil.isOneEmpty(project, project.getProjectId(), project.getTitle(), project.getProvinceId())) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
@@ -185,5 +185,11 @@ public class ProjectController extends BaseController {
         old.setProvinceId(project.getProvinceId());
         this.projectService.updateById(old);
         return SUCCESS_TIP;
+    }
+
+    @RequestMapping(value="/allProject", method = RequestMethod.GET)
+    @ResponseBody
+    public List<ProjectSimpleDto> allProject(){
+        return projectService.allProject();
     }
 }
