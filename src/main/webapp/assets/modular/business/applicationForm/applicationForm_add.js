@@ -58,6 +58,7 @@ $(document).ready(function () {
     });
 
     $("#save_application_btn").click(function () {
+        var empty = "";
         var applicationFormTypeId = $("#applicationFormTypeId").val();
         var applicationFormId = $("#applicationFormId").val();
         var applicationUser = $("#applicationUser").val();
@@ -66,61 +67,41 @@ $(document).ready(function () {
         var applicationTime = $("#applicationTime").val();
         var receiveTime = $("#receiveTime").val();
         var description = descriptionEditor.txt.html();
-        var use = useEditor.txt.html();
-        // validate();
-        $.ajax({
-            type : "GET",
-            contentType: "application/json;charset=UTF-8",
-            url : "/applicationForm/add",
-            data: {
-                applicationFormId: applicationFormId,
-                applicationFormTypeId: applicationFormTypeId,
-                applicationUser: applicationUser,
-                receiveUser: receiveUser,
-                projectId: projectId,
-                applicationTime: applicationTime,
-                receiveTime: receiveTime,
-                description: description,
-                use: use
-            },
-            success : function(result) {
-                window.location.href = '/applicationForm/list?condition=""';
-            },
-            error : function(e){
-            }
-        });
+        var useText = useTextEditor.txt.html();
+        if(applicationTime === empty) {
+            alert("申请日期为必填项");
+            return false;
+        }else if(receiveTime === empty) {
+            alert("接受日期为必填项");
+            return false;
+        }else if(descriptionEditor.txt.text() === empty && description.indexOf('img') === -1) {
+            alert("内容描述为必填项");
+            return false;
+        }else if(useTextEditor.txt.text() === empty && useText.indexOf('img') === -1) {
+            alert("用途为必填项");
+            return false;
+        }else{
+            $.ajax({
+                type : "GET",
+                contentType: "application/json;charset=UTF-8",
+                url : "/applicationForm/add",
+                data: {
+                    applicationFormId: applicationFormId,
+                    applicationFormTypeId: applicationFormTypeId,
+                    applicationUser: applicationUser,
+                    receiveUser: receiveUser,
+                    projectId: projectId,
+                    applicationTime: applicationTime,
+                    receiveTime: receiveTime,
+                    description: description,
+                    useText: useText
+                },
+                success : function(result) {
+                    window.location.href = '/applicationForm/list?condition=""';
+                },
+                error : function(e){
+                }
+            });
+        }
     });
 });
-
-
-// $(function(){
-// var onAutocompleteSelect =function(value, data) {
-//     //根据返回结果自定义一些操作
-// };
-// var options = {
-//     serviceUrl: Feng.ctxPath + "/mgr/searchByName",//获取数据的后台页面
-//     // width: 140,//提示框的宽度
-//     delimiter: /(,|;)\s*/,//分隔符
-//     onSelect: onAutocompleteSelect,//选中之后的回调函数
-//     deferRequestBy: 0, //单位微秒
-//     noCache: true //是否启用缓存 默认是开启缓存的
-// };
-// a1 = $('#applicationUser').autocomplete(options);
-
-    // 表单提交事件
-    // form.on('submit(btnSubmit)', function (data) {
-    //     var ajax = new $ax(Feng.ctxPath + "/project/add", function (data) {
-    //         Feng.success("添加成功！");
-    //
-    //         //传给上个页面，刷新table用
-    //         admin.putTempData('formOk', true);
-    //
-    //         //关掉对话框
-    //         admin.closeThisDialog();
-    //     }, function (data) {
-    //         Feng.error("添加失败！" + data.responseJSON.message)
-    //     });
-    //     ajax.set(data.field);
-    //     ajax.start();
-    // });
-// });

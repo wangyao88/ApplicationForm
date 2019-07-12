@@ -28,7 +28,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
             {field: 'applicationUserEmail', sort: true, title: 'Email'},
             {field: 'applicationUserPhone', sort: true, title: '联系电话'},
             {field: 'receiveUserName', sort: true, title: '接收人'},
-            {field: 'creceiveTime', sort: true, title: '接收日期'},
+            {field: 'receiveTime', sort: true, title: '接收日期'},
             {align: 'center', toolbar: '#tableBar', title: '操作', minWidth: 200}
         ]];
     };
@@ -64,15 +64,16 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
      * @param data 点击按钮时候的行数据
      */
     ApplicationForm.onEditApplicationForm = function (data) {
-        admin.putTempData('formOk', false);
-        top.layui.admin.open({
-            type: 2,
-            title: '申请单详情',
-            content: Feng.ctxPath + '/applicationForm/applicationForm_update?applicationFormId=' + data.applicationFormId,
-            end: function () {
-                admin.getTempData('formOk') && table.reload(ApplicationForm.tableId);
-            }
-        });
+        window.location.href = Feng.ctxPath + '/applicationForm/applicationForm_update?applicationFormId=' + data.applicationFormId;
+        // admin.putTempData('formOk', false);
+        // top.layui.admin.open({
+        //     type: 2,
+        //     title: '申请单详情',
+        //     content: Feng.ctxPath + '/applicationForm/applicationForm_update?applicationFormId=' + data.applicationFormId,
+        //     end: function () {
+        //         admin.getTempData('formOk') && table.reload(ApplicationForm.tableId);
+        //     }
+        // });
     };
 
     /**
@@ -91,7 +92,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
             ajax.set("applicationFormId", data.applicationFormId);
             ajax.start();
         };
-        Feng.confirm("是否删除申请单 " + data.title + "?", operation);
+        Feng.confirm("是否删除申请单?", operation);
     };
 
     // 渲染表格

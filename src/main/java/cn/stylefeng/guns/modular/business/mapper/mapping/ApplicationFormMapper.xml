@@ -7,7 +7,7 @@
         <id column="application_form_id" property="applicationFormId" />
         <result column="project_id" property="projectId" />
         <result column="description" property="description" />
-        <result column="use" property="use" />
+        <result column="use_text" property="useText" />
         <result column="application_form_type_id" property="applicationFormTypeId" />
         <result column="application_time" property="applicationTime" />
         <result column="application_user" property="applicationUser" />
@@ -27,7 +27,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="All_Column_List">
-        application_form_id AS "applicationFormId", project_id AS "projectId", description AS "description", use AS "use",
+        application_form_id AS "applicationFormId", project_id AS "projectId", description AS "description", use_text AS "useText",
         application_form_type_id AS "applicationFormTypeId", application_time AS "applicationTime", application_user AS "applicationUser",
         receive_time AS "receiveTime", receive_user AS "receiveUser", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser"
     </sql>

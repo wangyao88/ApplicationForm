@@ -22,6 +22,8 @@ import cn.stylefeng.roses.core.base.warpper.BaseControllerWrapper;
 import cn.stylefeng.roses.kernel.model.page.PageResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -57,9 +59,20 @@ public class ApplicationFormWrapper extends BaseControllerWrapper {
         map.put("applicationUserDeptName", ConstantFactory.me().getDeptName(applicationUser.getDeptId()));
         map.put("applicationUserEmail", applicationUser.getEmail());
         map.put("applicationUserPhone", applicationUser.getPhone());
+        Long applicationFormTypeId = DecimalUtil.getLong(map.get("applicationFormTypeId"));
+        map.put("applicationFormTypeName", ConstantFactory.me().getDictName(applicationFormTypeId));
         Long receiveUser = DecimalUtil.getLong(map.get("receiveUser"));
         map.put("receiveUserName", ConstantFactory.me().getUserNameById(receiveUser));
         Long projectId = DecimalUtil.getLong(map.get("projectId"));
         map.put("projectTitle", ConstantFactory.me().getProjectTitle(projectId));
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Timestamp applicationTime = (Timestamp) map.get("applicationTime");
+        simpleDateFormat.format(applicationTime);
+        map.put("applicationTime", simpleDateFormat.format(applicationTime));
+
+        Timestamp receiveTime = (Timestamp) map.get("receiveTime");
+        simpleDateFormat.format(receiveTime);
+        map.put("receiveTime", simpleDateFormat.format(receiveTime));
     }
 }

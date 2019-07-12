@@ -535,7 +535,7 @@ CREATE TABLE `business_application_form`  (
   `application_form_id` bigint(20) NOT NULL COMMENT '主键',
   `project_id` bigint(20) DEFAULT NULL COMMENT '项目',
   `description` text CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '数据内容描述',
-  `use` text CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '用途',
+  `use_text` text CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '用途',
   `application_form_type_id` bigint(20) DEFAULT NULL COMMENT '申请单类型',
   `application_time` datetime(0) DEFAULT NULL COMMENT '申请时间',
   `application_user` bigint(20) DEFAULT NULL COMMENT '申请人',

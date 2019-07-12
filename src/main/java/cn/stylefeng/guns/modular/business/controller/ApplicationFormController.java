@@ -16,6 +16,7 @@
 package cn.stylefeng.guns.modular.business.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.stylefeng.guns.config.properties.GunsProperties;
 import cn.stylefeng.guns.core.common.annotion.BussinessLog;
 import cn.stylefeng.guns.core.common.annotion.Permission;
 import cn.stylefeng.guns.core.common.constant.dictmap.ApplicationFormMap;
@@ -34,16 +35,25 @@ import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.Cleanup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 申请单控制器
@@ -59,6 +69,8 @@ public class ApplicationFormController extends BaseController {
 
     @Autowired
     private ApplicationFormService applicationFormService;
+    @Autowired
+    private GunsProperties gunsProperties;
 
     /**
      * 跳转到申请单列表首页
@@ -80,6 +92,95 @@ public class ApplicationFormController extends BaseController {
     @RequestMapping("/applicationForm_add")
     public String applicationFormAdd() {
         return PREFIX + "applicationForm_add.html";
+    }
+
+    /**
+     * 获取申请单列表
+     *
+     * @author fengshuonan
+     * @Date 2018/12/23 6:06 PM
+     */
+    @RequestMapping(value = "/list")
+    @ResponseBody
+    public Object list(String condition) {
+        Page<Map<String, Object>> list = this.applicationFormService.list(condition);
+        Page<Map<String, Object>> wrap = new ApplicationFormWrapper(list).wrap();
+        return LayuiPageFactory.createPageInfo(wrap);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/img/upload")
+    @ResponseBody
+    public JSONObject upload(@RequestPart("image") MultipartFile image, HttpServletRequest request) {
+        try {
+            String pictureName = UUID.randomUUID().toString() + "." + ToolUtil.getFileSuffix(image.getOriginalFilename());
+
+            String fileSavePath = applicationFormService.mkdirForUpload();
+            fileSavePath = fileSavePath + pictureName;
+            image.transferTo(new File(fileSavePath));
+            return getUploadImg(pictureName, request);
+        } catch (Exception e) {
+            throw new ServiceException(BizExceptionEnum.UPLOAD_ERROR);
+        }
+    }
+
+    private JSONObject getUploadImg(String pictureName, HttpServletRequest request) {
+        String fileSavePath = request.getRequestURL() + "/getImageByName?name=" + pictureName;
+        JSONObject json = new JSONObject();
+        json.put("url", fileSavePath);
+        return json;
+    }
+
+    @RequestMapping("/img/upload/getImageByName")
+    public void getImageByName(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+        @Cleanup
+        ServletOutputStream out = response.getOutputStream();
+        String name = request.getParameter("name");
+        byte[] image = applicationFormService.getImageByName(name);
+        if(image == null){
+            return;
+        }
+        @Cleanup
+        InputStream imageStream = new ByteArrayInputStream(image);
+        response.setContentType("image/*");
+        int len = 0;
+        byte[] buf = new byte[1024];
+        while ((len = imageStream.read(buf, 0, 1024)) != -1) {
+            out.write(buf, 0, len);
+        }
+        out.flush();
+    }
+
+    /**
+     * 新增申请单
+     *
+     * @author fengshuonan
+     * @Date 2018/12/23 6:06 PM
+     */
+    @RequestMapping(value = "/add")
+    @ResponseBody
+    @BussinessLog(value = "新增申请单", key = "applicationFormId", dict = ApplicationFormMap.class)
+    public Object add(ApplicationForm applicationForm) {
+        if (ToolUtil.isOneEmpty(applicationForm, applicationForm.getProjectId(), applicationForm.getDescription(), applicationForm.getUseText())) {
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        applicationForm.setCreateUser(ShiroKit.getUserNotNull().getId());
+        applicationForm.setCreateTime(new Date());
+        this.applicationFormService.save(applicationForm);
+        return SUCCESS_TIP;
+    }
+
+    /**
+     * 删除申请单
+     *
+     * @author fengshuonan
+     * @Date 2018/12/23 6:06 PM
+     */
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    @BussinessLog(value = "删除申请单", key = "applicationFormId", dict = DeleteDict.class)
+    public Object delete(@RequestParam Long applicationFormId) {
+        this.applicationFormService.removeById(applicationFormId);
+        return SUCCESS_TIP;
     }
 
     /**
@@ -126,53 +227,6 @@ public class ApplicationFormController extends BaseController {
     }
 
     /**
-     * 获取申请单列表
-     *
-     * @author fengshuonan
-     * @Date 2018/12/23 6:06 PM
-     */
-    @RequestMapping(value = "/list")
-    @ResponseBody
-    public Object list(String condition) {
-        Page<Map<String, Object>> list = this.applicationFormService.list(condition);
-        Page<Map<String, Object>> wrap = new ApplicationFormWrapper(list).wrap();
-        return LayuiPageFactory.createPageInfo(wrap);
-    }
-
-    /**
-     * 新增申请单
-     *
-     * @author fengshuonan
-     * @Date 2018/12/23 6:06 PM
-     */
-    @RequestMapping(value = "/add")
-    @ResponseBody
-    @BussinessLog(value = "新增申请单", key = "applicationFormId", dict = ApplicationFormMap.class)
-    public Object add(ApplicationForm applicationForm) {
-        if (ToolUtil.isOneEmpty(applicationForm, applicationForm.getProjectId(), applicationForm.getDescription(), applicationForm.getUse())) {
-            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
-        }
-        applicationForm.setCreateUser(ShiroKit.getUserNotNull().getId());
-        applicationForm.setCreateTime(new Date());
-        this.applicationFormService.save(applicationForm);
-        return SUCCESS_TIP;
-    }
-
-    /**
-     * 删除申请单
-     *
-     * @author fengshuonan
-     * @Date 2018/12/23 6:06 PM
-     */
-    @RequestMapping(value = "/delete")
-    @ResponseBody
-    @BussinessLog(value = "删除申请单", key = "applicationFormId", dict = DeleteDict.class)
-    public Object delete(@RequestParam Long applicationFormId) {
-        this.applicationFormService.removeById(applicationFormId);
-        return SUCCESS_TIP;
-    }
-
-    /**
      * 修改申请单
      *
      * @author fengshuonan
@@ -182,7 +236,7 @@ public class ApplicationFormController extends BaseController {
     @ResponseBody
     @BussinessLog(value = "修改申请单", key = "applicationFormId", dict = ApplicationFormMap.class)
     public Object update(ApplicationForm applicationForm) {
-        if (ToolUtil.isOneEmpty(applicationForm, applicationForm.getApplicationFormId(), applicationForm.getProjectId(), applicationForm.getDescription(), applicationForm.getUse())) {
+        if (ToolUtil.isOneEmpty(applicationForm, applicationForm.getApplicationFormId(), applicationForm.getProjectId(), applicationForm.getDescription(), applicationForm.getUseText())) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
         }
         ApplicationForm old = this.applicationFormService.getById(applicationForm.getApplicationFormId());
@@ -191,7 +245,7 @@ public class ApplicationFormController extends BaseController {
         old.setApplicationUser(applicationForm.getApplicationUser());
         old.setApplicationTime(applicationForm.getApplicationTime());
         old.setDescription(applicationForm.getDescription());
-        old.setUse(applicationForm.getUse());
+        old.setUseText(applicationForm.getUseText());
         old.setReceiveUser(applicationForm.getReceiveUser());
         old.setReceiveTime(applicationForm.getReceiveTime());
         old.setUpdateUser(ShiroKit.getUserNotNull().getId());

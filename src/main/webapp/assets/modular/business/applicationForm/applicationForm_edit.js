@@ -1,10 +1,3 @@
-var ProvinceInfoDlg = {
-    data: {
-        pid: "",
-        pName: ""
-    }
-};
-
 layui.use(['layer', 'form', 'admin', 'ax'], function () {
     var $ = layui.jquery;
     var $ax = layui.ax;

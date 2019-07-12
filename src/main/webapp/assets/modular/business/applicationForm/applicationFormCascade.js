@@ -1,5 +1,4 @@
 function cascade(item) {
-    console.log(item);
     var id = item[0].dataset.value;
     if(id.indexOf('dict') != -1) {
         $("#applicationFormTypeId").val(id.replace("dict", ""));

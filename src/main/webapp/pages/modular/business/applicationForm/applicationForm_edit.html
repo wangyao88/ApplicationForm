@@ -1,22 +1,133 @@
-@layout("/common/_container.html",{bg:"bg-white",js:["/assets/modular/business/applicationForm/applicationForm_edit.js"]}){
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="../../../../assets/common/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../../assets/common/module/admin.css" media="all"/>
+    <link rel="stylesheet" href="../../../../assets/common/layui/css/modules/laydate/default/laydate.css"/>
+    <link rel="stylesheet" href="../../../../assets/expand/plugins/searchable/jquery.searchableSelect.css"/>
+    <script src="../../../../assets/expand/plugins/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../../../assets/expand/plugins/wangeditor/wangEditor.min.js"></script>
+    <script src="../../../../assets/common/layui/lay/modules/laydate.js"></script>
+    <script src="../../../../assets/modular/business/applicationForm/applicationFormCascade.js"></script>
+    <script src="../../../../assets/expand/plugins/searchable/jquery.searchableSelect.js"></script>
+    <script src="../../../../assets/modular/business/applicationForm/applicationForm_add.js"></script>
+</head>
+<body>
 <form id="applicationFormForm" lay-filter="applicationFormForm" class="layui-form model-form">
-    <input name="applicationFormId" type="hidden"/>
+    <input id="applicationFormTypeId" name="applicationFormTypeId" type="hidden"/>
+    <input id="applicationFormId" name="applicationFormId" type="hidden"/>
+    <input id="applicationUser" name="applicationUser" type="hidden"/>
+    <input id="receiveUser" name="receiveUser" type="hidden"/>
+    <input id="projectId" name="projectId" type="hidden"/>
     <div class="layui-form-item">
-        <label class="layui-form-label">名称<span style="color: red;">*</span></label>
+        <label class="layui-form-label">类型<span style="color: red;">*</span></label>
         <div class="layui-input-block">
-            <input name="title" placeholder="请输入名称" type="text" class="layui-input" lay-verify="required" required/>
+            <select id="aapplicationFormTypeSelect"></select>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">省市<span style="color: red;">*</span></label>
+        <label class="layui-form-label">申请人<span style="color: red;">*</span></label>
         <div class="layui-input-block">
-            <input id="provinceId" name="provinceId" type="hidden">
-            <input id="provinceName" name="provinceName" placeholder="请输入省市" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+            <select id="applicationUserSelect"></select>
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">使用部门<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input disabled id="applicationUserDeptName" name="applicationUserDeptName" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">Email<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input disabled id="applicationUserEmail" name="applicationUserEmail" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系电话<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input disabled id="applicationUserPhone" name="applicationUserPhone" placeholder="请输入申请人姓名" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">申请日期<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input id="applicationTime" name="applicationTime" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属项目<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <select id="projectSelect"></select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">接收人<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <select id="receiveUserSelect"></select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">接收日期<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input id="receiveTime" name="applicationTime" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">内容描述<span style="color: red;">*</span></label>
+        <div class="layui-input-block" id="description">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用途<span style="color: red;">*</span></label>
+        <div class="layui-input-block" id="useText">
+        </div>
+    </div>
+
+
     <div class="layui-form-item text-right">
-        <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
-        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+        <button id="cancel_application_btn" class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        <button id="save_application_btn" class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
     </div>
 </form>
-@}
+<script type="text/javascript">
+    var applicationFormUploadImgPath = '/applicationForm/img/upload';
+    var E = window.wangEditor;
+    var descriptionEditor = new E('#description');
+    descriptionEditor.customConfig.showLinkImg = false;
+    descriptionEditor.customConfig.pasteIgnoreImg = true;
+    descriptionEditor.customConfig.uploadImgServer = applicationFormUploadImgPath;
+    descriptionEditor.customConfig.uploadFileName = 'image';
+    descriptionEditor.customConfig.uploadImgHooks = {
+        // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+        // （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+        customInsert: function (insertImg, result, editor) {
+            // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+            // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+            // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+            var url = result.url;
+            insertImg(url);
+            // result 必须是一个 JSON 格式字符串！！！否则报错
+        }
+    };
+    descriptionEditor.create();
+
+    var useTextEditor = new E('#useText');
+    useTextEditor.customConfig.showLinkImg = false;
+    useTextEditor.customConfig.pasteIgnoreImg = true;
+    useTextEditor.customConfig.uploadImgServer = applicationFormUploadImgPath;
+    useTextEditor.customConfig.uploadFileName = 'image';
+    useTextEditor.customConfig.uploadImgHooks = {
+        customInsert: function (insertImg, result, editor) {
+            var url = result.url;
+            insertImg(url);
+        }
+    };
+    useTextEditor.create();
+</script>
+</body>
+</html>

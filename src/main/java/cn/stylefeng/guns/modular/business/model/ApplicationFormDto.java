@@ -42,7 +42,7 @@ public class ApplicationFormDto implements Serializable {
     /**
      * 用途
      */
-    private String use;
+    private String useText;
 
     /**
      * 申请单类型(字典) 出库 入库

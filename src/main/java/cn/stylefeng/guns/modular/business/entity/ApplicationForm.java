@@ -41,8 +41,8 @@ public class ApplicationForm implements Serializable {
     /**
      * 用途
      */
-    @TableField("use")
-    private String use;
+    @TableField("use_text")
+    private String useText;
 
     /**
      * 申请单类型(字典) 出库 入库
