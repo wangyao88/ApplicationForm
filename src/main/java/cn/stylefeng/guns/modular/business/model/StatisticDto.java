@@ -58,11 +58,6 @@ public class StatisticDto implements Serializable {
     private Long hospitalNum;
 
     /**
-     * 就医方式
-     */
-    private String medicalTreatmentName;
-
-    /**
      * 开始日期
      */
     private String beginDate;

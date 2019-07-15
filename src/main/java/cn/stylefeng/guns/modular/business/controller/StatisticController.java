@@ -42,7 +42,9 @@ import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -215,5 +217,31 @@ public class StatisticController extends BaseController {
         Map<String, Object> maps = Maps.newHashMap();
         maps.put("continuationDicts", continuationDicts);
         return maps;
+    }
+
+    /**
+     * 跳转到导入统计信息
+     *
+     * @author fengshuonan
+     * @Date 2018/12/23 6:06 PM
+     */
+    @RequestMapping("/statistic_import")
+    public String go_importExcel() {
+        return PREFIX + "statistic_import.html";
+    }
+
+    @PostMapping("/importExcel")
+    @ResponseBody
+    public Object importExcel(@RequestParam("file") MultipartFile excel) {
+        String fileName = excel.getOriginalFilename();
+        if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
+            throw new ServiceException(403, "上传文件格式不正确");
+        }
+        try {
+            this.statisticService.importExcel(fileName, excel);
+        } catch (IOException e) {
+            throw new ServiceException(500, "上传文件失败！");
+        }
+        return SUCCESS_TIP;
     }
 }

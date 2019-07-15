@@ -99,7 +99,16 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
     };
 
     Statistic.importExcel = function() {
-
+        window.location.href = '/statistic/statistic_import';
+        // admin.putTempData('formOk', false);
+        // top.layui.admin.open({
+        //     type: 2,
+        //     title: '导入统计信息',
+        //     content: Feng.ctxPath + '/statistic/statistic_import',
+        //     end: function () {
+        //         admin.getTempData('formOk') && table.reload(Statistic.tableId);
+        //     }
+        // });
     };
 
     // 渲染表格
