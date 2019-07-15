@@ -56,9 +56,6 @@ public class StatisticWrapper extends BaseControllerWrapper {
         Long provinceId = DecimalUtil.getLong(map.get("provinceId"));
         map.put("provinceName", ConstantFactory.me().getProvinceName(provinceId));
 
-        Long medicalTreatmentId = DecimalUtil.getLong(map.get("medicalTreatmentId"));
-        map.put("medicalTreatmentName", ConstantFactory.me().getDictName(medicalTreatmentId));
-
         Long continuationId = DecimalUtil.getLong(map.get("continuationId"));
         map.put("continuationName", ConstantFactory.me().getDictName(continuationId));
     }

@@ -193,7 +193,8 @@ public class StatisticController extends BaseController {
         old.setMainNum(statistic.getMainNum());
         old.setDetailNum(statistic.getDetailNum());
         old.setHasDischargeNum(statistic.getHasDischargeNum());
-        old.setMedicalTreatmentId(statistic.getMedicalTreatmentId());
+        old.setOutPatientNum(statistic.getOutPatientNum());
+        old.setHospitalNum(statistic.getHospitalNum());
         old.setBeginDate(statistic.getBeginDate());
         old.setEndDate(statistic.getEndDate());
         old.setContinuationId(statistic.getContinuationId());
@@ -210,10 +211,8 @@ public class StatisticController extends BaseController {
     }
 
     private Map<String, Object> initComboxs() {
-        List<DictDto> medicalTreatmentDicts = dictService.allDict("MEDICAL_TREATMENT");
         List<DictDto> continuationDicts = dictService.allDict("CONTINUATION");
         Map<String, Object> maps = Maps.newHashMap();
-        maps.put("medicalTreatmentDicts", medicalTreatmentDicts);
         maps.put("continuationDicts", continuationDicts);
         return maps;
     }

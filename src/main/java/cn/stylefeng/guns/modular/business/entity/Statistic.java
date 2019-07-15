@@ -51,10 +51,16 @@ public class Statistic implements Serializable {
     private Long hasDischargeNum;
 
     /**
-     * 就医方式(字典) MEDICAL_TREATMENT 住院 门诊 其他
+     * 就医方式 门诊数量
      */
-    @TableField("medical_treatment_id")
-    private Long medicalTreatmentId;
+    @TableField("out_patient_num")
+    private Long outPatientNum;
+
+    /**
+     * 就医方式 住院数量
+     */
+    @TableField("hospital_num")
+    private Long hospitalNum;
 
     /**
      * 开始日期

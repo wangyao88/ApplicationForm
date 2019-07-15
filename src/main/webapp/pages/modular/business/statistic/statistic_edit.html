@@ -27,8 +27,16 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">就医方式<span style="color: red;">*</span></label>
-        <select id="medicalTreatmentSelect" name="medicalTreatmentId"></select>
+        <label class="layui-form-label">门诊数量</label>
+        <div class="layui-input-block">
+            <input id="outPatientNum" name="outPatientNum" placeholder="请输入门诊数量" type="text" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">住院数量</label>
+        <div class="layui-input-block">
+            <input id="hospitalNum" name="hospitalNum" placeholder="请输入住院数量" type="text" class="layui-input"/>
+        </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">开始日期<span style="color: red;">*</span></label>
@@ -44,7 +52,9 @@
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">是否连续<span style="color: red;">*</span></label>
-        <select id="continuationSelect" name="continuationId"></select>
+        <div class="layui-input-block">
+            <select id="continuationSelect" name="continuationId"></select>
+        </div>
     </div>
     <div class="layui-form-item text-right">
         <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>

@@ -48,9 +48,14 @@ public class StatisticDto implements Serializable {
     private Long hasDischargeNum;
 
     /**
-     * 就医方式(字典) MEDICAL_TREATMENT 住院 门诊 其他
+     * 就医方式 门诊数量
      */
-    private Long medicalTreatmentId;
+    private Long outPatientNum;
+
+    /**
+     * 就医方式 住院数量
+     */
+    private Long hospitalNum;
 
     /**
      * 就医方式

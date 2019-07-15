@@ -18,9 +18,6 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax'], function () {
     admin.iframeAuto();
     var ajax = new $ax(Feng.ctxPath + "/statistic/comboxs");
     var result = ajax.start();
-    $.each(result.medicalTreatmentDicts, function(index, medicalTreatmentDict){
-        $("#medicalTreatmentSelect").append("<option value='"+medicalTreatmentDict.dictId+"'>"+medicalTreatmentDict.name+"</option>");
-    });
     $.each(result.continuationDicts, function(index, continuationDict){
         $("#continuationSelect").append("<option value='"+continuationDict.dictId+"'>"+continuationDict.name+"</option>");
     });

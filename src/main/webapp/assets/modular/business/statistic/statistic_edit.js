@@ -28,9 +28,6 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax'], function () {
 
     var ajax = new $ax(Feng.ctxPath + "/statistic/detail/" + Feng.getUrlParam("statisticId"));
     var result = ajax.start();
-    $.each(result.medicalTreatmentDicts, function(index, medicalTreatmentDict){
-        $("#medicalTreatmentSelect").append("<option value='"+medicalTreatmentDict.dictId+"'>"+medicalTreatmentDict.name+"</option>");
-    });
     $.each(result.continuationDicts, function(index, continuationDict){
         $("#continuationSelect").append("<option value='"+continuationDict.dictId+"'>"+continuationDict.name+"</option>");
     });
