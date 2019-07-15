@@ -28,15 +28,22 @@ import cn.stylefeng.guns.core.log.LogObjectHolder;
 import cn.stylefeng.guns.core.shiro.ShiroKit;
 import cn.stylefeng.guns.modular.business.entity.ApplicationForm;
 import cn.stylefeng.guns.modular.business.model.ApplicationFormDto;
+import cn.stylefeng.guns.modular.business.model.ProjectSimpleDto;
 import cn.stylefeng.guns.modular.business.service.ApplicationFormService;
+import cn.stylefeng.guns.modular.business.service.ProjectService;
 import cn.stylefeng.guns.modular.business.warpper.ApplicationFormWrapper;
 import cn.stylefeng.guns.modular.system.entity.User;
+import cn.stylefeng.guns.modular.system.model.DictDto;
+import cn.stylefeng.guns.modular.system.model.UserSimpleDto;
+import cn.stylefeng.guns.modular.system.service.DictService;
+import cn.stylefeng.guns.modular.system.service.UserService;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Maps;
 import lombok.Cleanup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,7 +58,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -71,6 +80,12 @@ public class ApplicationFormController extends BaseController {
     private ApplicationFormService applicationFormService;
     @Autowired
     private GunsProperties gunsProperties;
+    @Autowired
+    private ProjectService projectService;
+    @Autowired
+    private DictService dictService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 跳转到申请单列表首页
@@ -78,7 +93,7 @@ public class ApplicationFormController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 6:06 PM
      */
-    @RequestMapping("")
+    @GetMapping("")
     public String index() {
         return PREFIX + "applicationForm.html";
     }
@@ -156,7 +171,7 @@ public class ApplicationFormController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 6:06 PM
      */
-    @RequestMapping(value = "/add")
+    @PostMapping("/add")
     @ResponseBody
     @BussinessLog(value = "新增申请单", key = "applicationFormId", dict = ApplicationFormMap.class)
     public Object add(ApplicationForm applicationForm) {
@@ -191,7 +206,6 @@ public class ApplicationFormController extends BaseController {
      */
     @RequestMapping("/applicationForm_update")
     public String applicationFormUpdate(@RequestParam("applicationFormId") Long applicationFormId) {
-
         if (ToolUtil.isEmpty(applicationFormId)) {
             throw new RequestEmptyException();
         }
@@ -209,10 +223,13 @@ public class ApplicationFormController extends BaseController {
     @RequestMapping(value = "/detail/{applicationFormId}")
     @Permission
     @ResponseBody
-    public Object detail(@PathVariable("applicationFormId") Long applicationFormId) {
+    public Map<String, Object> detail(@PathVariable("applicationFormId") Long applicationFormId) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         ApplicationForm applicationForm = this.applicationFormService.getById(applicationFormId);
         ApplicationFormDto applicationFormDto = new ApplicationFormDto();
         BeanUtil.copyProperties(applicationForm, applicationFormDto);
+        applicationFormDto.setApplicationTimeStr(simpleDateFormat.format(applicationFormDto.getApplicationTime()));
+        applicationFormDto.setReceiveTimeStr(simpleDateFormat.format(applicationFormDto.getReceiveTime()));
         applicationFormDto.setApplicationUserName(ConstantFactory.me().getUserNameById(applicationFormDto.getApplicationUser()));
         applicationFormDto.setReceiveUserName(ConstantFactory.me().getUserNameById(applicationFormDto.getReceiveUser()));
         User applicationUser = ConstantFactory.me().getUser(applicationFormDto.getApplicationUser());
@@ -223,7 +240,9 @@ public class ApplicationFormController extends BaseController {
         applicationFormDto.setCreateUserName(ConstantFactory.me().getUserNameById(applicationFormDto.getApplicationUser()));
         applicationFormDto.setProjectTitle(ConstantFactory.me().getProjectTitle(applicationFormDto.getApplicationUser()));
         applicationFormDto.setApplicationFormTypeName(ConstantFactory.me().getDictName(applicationFormDto.getApplicationFormTypeId()));
-        return applicationFormDto;
+        Map<String, Object> maps = initComboxs();
+        maps.put("applicationForm", applicationFormDto);
+        return maps;
     }
 
     /**
@@ -252,5 +271,22 @@ public class ApplicationFormController extends BaseController {
         old.setUpdateTime(new Date());
         this.applicationFormService.updateById(old);
         return SUCCESS_TIP;
+    }
+
+    @RequestMapping(value="/comboxs", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> comboxs(){
+        return initComboxs();
+    }
+
+    private Map<String, Object> initComboxs() {
+        List<ProjectSimpleDto> projectSimpleDtos = projectService.allProject();
+        List<UserSimpleDto> userSimpleDtos = userService.allUser();
+        List<DictDto> dictDtos = dictService.allDict("APPLICATION_FORM_TYPE");
+        Map<String, Object> maps = Maps.newHashMap();
+        maps.put("projects", projectSimpleDtos);
+        maps.put("users", userSimpleDtos);
+        maps.put("dicts", dictDtos);
+        return maps;
     }
 }

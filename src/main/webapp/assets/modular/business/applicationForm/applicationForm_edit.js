@@ -1,50 +1,62 @@
-layui.use(['layer', 'form', 'admin', 'ax'], function () {
-    var $ = layui.jquery;
-    var $ax = layui.ax;
-    var form = layui.form;
-    var admin = layui.admin;
-    var layer = layui.layer;
-
-    // 让当前iframe弹层高度适应
-    admin.iframeAuto();
-
-    //获取省市信息
-    var ajax = new $ax(Feng.ctxPath + "/project/detail/" + Feng.getUrlParam("projectId"));
-    var result = ajax.start();
-    form.val('projectForm', result);
-
-    // 点击省市时
-    $('#provinceName').click(function () {
-        var formName = encodeURIComponent("parent.ProvinceInfoDlg.data.pName");
-        var formId = encodeURIComponent("parent.ProvinceInfoDlg.data.pid");
-        var treeUrl = encodeURIComponent("/province/tree");
-
-        layer.open({
-            type: 2,
-            title: '父级省市',
-            area: ['300px', '200px'],
-            content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
-            end: function () {
-                $("#provinceId").val(ProvinceInfoDlg.data.pid);
-                $("#provinceName").val(ProvinceInfoDlg.data.pName);
-            }
-        });
+$(document).ready(function () {
+    laydate.render({
+        elem: '#applicationTime',
+        value: new Date()
     });
 
-    // 表单提交事件
-    form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/project/update", function (data) {
-            Feng.success("添加成功！");
-
-            //传给上个页面，刷新table用
-            admin.putTempData('formOk', true);
-
-            //关掉对话框
-            admin.closeThisDialog();
-        }, function (data) {
-            Feng.error("添加失败！" + data.responseJSON.message)
-        });
-        ajax.set(data.field);
-        ajax.start();
+    laydate.render({
+        elem: '#receiveTime',
+        value: new Date()
     });
+
+    function getIdFromUrl(param) {
+        return window.location.search.substr(param.length+2);
+    }
+
+    $.ajax({
+        type : "GET",
+        contentType: "application/json;charset=UTF-8",
+        url : "/applicationForm/detail/" + getIdFromUrl("applicationFormId"),
+        success : function(data) {
+            var applicationForm = data.applicationForm;
+            $("#applicationFormId").val(applicationForm.applicationFormId);
+            $("#applicationTime").val(applicationForm.applicationTimeStr);
+            $("#receiveTime").val(applicationForm.receiveTimeStr);
+            descriptionEditor.txt.html(applicationForm.description);
+            useTextEditor.txt.html(applicationForm.useText);
+
+            var dicts = data.dicts;
+            $.each(dicts, function(index, dict){
+                $("#applicationFormTypeSelect").append("<option value='dict"+dict.dictId+"'>"+dict.name+"</option>");
+            });
+
+            $("#applicationFormTypeSelect option[value='dict"+applicationForm.applicationFormTypeId+"']").attr("selected", true);
+            $('#applicationFormTypeSelect').searchableSelect();
+
+            var users = data.users;
+            $.each(users, function(index, user){
+                $("#applicationUserSelect").append("<option value='application"+user.userId+"'>"+user.name+"</option>");
+                $("#receiveUserSelect").append("<option value='receive"+user.userId+"'>"+user.name+"</option>");
+            });
+            $("#applicationUserSelect option[value='application"+applicationForm.applicationUser+"']").attr("selected", true);
+            $('#applicationUserSelect').searchableSelect();
+            $("#receiveUserSelect option[value='receive"+applicationForm.receiveUser+"']").attr("selected", true);
+            $('#receiveUserSelect').searchableSelect();
+
+            var projects = data.projects;
+            $.each(projects, function(index, project){
+                $("#projectSelect").append("<option value='project"+project.projectId+"'>"+project.title+"</option>");
+            });
+            $("#projectSelect option[value='project"+applicationForm.projectId+"']").attr("selected", true);
+            $('#projectSelect').searchableSelect();
+        },
+        error : function(e){
+        }
+    });
+
+    $("#cancel_application_btn").click(function () {
+        window.location.href = '/applicationForm';
+    });
+
+    $("#save_application_btn").click(saveApplicationForm);
 });

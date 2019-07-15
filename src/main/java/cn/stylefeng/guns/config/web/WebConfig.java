@@ -28,6 +28,7 @@ import com.alibaba.druid.support.spring.stat.BeanTypeAutoProxyCreator;
 import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
+import com.google.common.collect.Lists;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.JdkRegexpMethodPointcut;
@@ -162,7 +163,7 @@ public class WebConfig implements WebMvcConfigurer {
     public FilterRegistrationBean xssFilterRegistration() {
         XssFilter xssFilter = new XssFilter();
         // 这里可以加不被xss过滤的接口
-        // xssFilter.setUrlExclusion(Arrays.asList("/notice/update", "/notice/add"));
+        xssFilter.setUrlExclusion(Lists.newArrayList("/applicationForm/add", "/applicationForm/update"));
         FilterRegistrationBean registration = new FilterRegistrationBean(xssFilter);
         registration.addUrlPatterns("/*");
         return registration;

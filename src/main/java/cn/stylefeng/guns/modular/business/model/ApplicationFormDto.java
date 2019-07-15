@@ -82,8 +82,9 @@ public class ApplicationFormDto implements Serializable {
     /**
      * 申请时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date applicationTime;
+
+    private String applicationTimeStr;
 
     /**
      * 接收人
@@ -98,8 +99,9 @@ public class ApplicationFormDto implements Serializable {
     /**
      * 接收时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date receiveTime;
+
+    private String receiveTimeStr;
 
     /**
      * 创建时间

@@ -14,6 +14,7 @@
     <script src="../../../../assets/common/layui/lay/modules/laydate.js"></script>
     <script src="../../../../assets/modular/business/applicationForm/applicationFormCascade.js"></script>
     <script src="../../../../assets/expand/plugins/searchable/jquery.searchableSelect.js"></script>
+    <script src="../../../../assets/modular/business/applicationForm/applicationForm_common.js"></script>
     <script src="../../../../assets/modular/business/applicationForm/applicationForm_add.js"></script>
 </head>
 <body>
@@ -26,7 +27,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">类型<span style="color: red;">*</span></label>
         <div class="layui-input-block">
-            <select id="aapplicationFormTypeSelect"></select>
+            <select id="applicationFormTypeSelect"></select>
         </div>
     </div>
     <div class="layui-form-item">
@@ -91,7 +92,7 @@
 
     <div class="layui-form-item text-right">
         <button id="cancel_application_btn" class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
-        <button id="save_application_btn" class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+        <button id="save_application_btn" class="layui-btn" type="button">保存</button>
     </div>
 </form>
 <script type="text/javascript">
