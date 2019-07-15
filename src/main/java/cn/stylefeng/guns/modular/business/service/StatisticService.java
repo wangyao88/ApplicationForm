@@ -43,5 +43,8 @@ public class StatisticService extends ServiceImpl<StatisticMapper, Statistic> {
         InputStream inputStream = excel.getInputStream();
         //读取excel
         List<Object> data = EasyExcelFactory.read(inputStream, new Sheet(1, 0));
+        System.out.println(data);
     }
+
+
 }
