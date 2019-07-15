@@ -279,21 +279,29 @@ INSERT INTO `sys_menu` VALUES (184, 'to_project_update', 'project', '[0],[dashbo
 INSERT INTO `sys_menu` VALUES (185, 'project_list', 'project', '[0],[dashboard],[project],', '项目列表', '', '/project/list', 5, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
 INSERT INTO `sys_menu` VALUES (186, 'project_detail', 'project', '[0],[dashboard],[project],', '项目详情', '', '/project/detail', 6, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
 
-INSERT INTO `sys_menu` VALUES (187, 'applicationform', 'dashboard', '[0],[dashboard],', '申请单管理', NULL, '/applicationform', 3, 2, 'Y', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
-INSERT INTO `sys_menu` VALUES (188, 'applicationform_add', 'applicationform', '[0],[dashboard],[applicationform],', '添加申请单', NULL, '/applicationform/add', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
-INSERT INTO `sys_menu` VALUES (189, 'applicationform_update', 'applicationform', '[0],[dashboard],[applicationform],', '修改申请单', NULL, '/applicationform/update', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
-INSERT INTO `sys_menu` VALUES (190, 'applicationform_delete', 'applicationform', '[0],[dashboard],[applicationform],', '删除申请单', NULL, '/applicationform/delete', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
-INSERT INTO `sys_menu` VALUES (191, 'to_applicationform_update', 'applicationform', '[0],[dashboard],[applicationform],', '修改申请单跳转', '', '/applicationform/applicationform_update', 4, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
-INSERT INTO `sys_menu` VALUES (192, 'applicationform_list', 'applicationform', '[0],[dashboard],[applicationform],', '申请单列表', '', '/applicationform/list', 5, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
-INSERT INTO `sys_menu` VALUES (193, 'applicationform_detail', 'applicationform', '[0],[dashboard],[applicationform],', '申请单详情', '', '/applicationform/detail', 6, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (187, 'applicationForm', 'dashboard', '[0],[dashboard],', '申请单管理', NULL, '/applicationForm', 3, 2, 'Y', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (188, 'applicationForm_add', 'applicationForm', '[0],[dashboard],[applicationForm],', '添加申请单', NULL, '/applicationForm/add', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (189, 'applicationForm_update', 'applicationForm', '[0],[dashboard],[applicationForm],', '修改申请单', NULL, '/applicationForm/update', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (190, 'applicationForm_delete', 'applicationForm', '[0],[dashboard],[applicationForm],', '删除申请单', NULL, '/applicationForm/delete', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (191, 'to_applicationForm_update', 'applicationForm', '[0],[dashboard],[applicationForm],', '修改申请单跳转', '', '/applicationForm/applicationForm_update', 4, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (192, 'applicationForm_list', 'applicationForm', '[0],[dashboard],[applicationForm],', '申请单列表', '', '/applicationForm/list', 5, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (193, 'applicationForm_detail', 'applicationForm', '[0],[dashboard],[applicationForm],', '申请单详情', '', '/applicationForm/detail', 6, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
 
-INSERT INTO `sys_menu` VALUES (194, 'statistic', 'dashboard', '[0],[dashboard],', '统计信息管理', NULL, '/statistic', 3, 2, 'Y', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (194, 'statistic', 'dashboard', '[0],[dashboard],', '数据统计信息管理', NULL, '/statistic', 3, 2, 'Y', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
 INSERT INTO `sys_menu` VALUES (195, 'statistic_add', 'statistic', '[0],[dashboard],[statistic],', '添加统计信息', NULL, '/statistic/add', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
 INSERT INTO `sys_menu` VALUES (196, 'statistic_update', 'statistic', '[0],[dashboard],[statistic],', '修改统计信息', NULL, '/statistic/update', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
 INSERT INTO `sys_menu` VALUES (197, 'statistic_delete', 'statistic', '[0],[dashboard],[statistic],', '删除统计信息', NULL, '/statistic/delete', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
 INSERT INTO `sys_menu` VALUES (198, 'to_statistic_update', 'statistic', '[0],[dashboard],[statistic],', '修改统计信息跳转', '', '/statistic/statistic_update', 4, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
 INSERT INTO `sys_menu` VALUES (199, 'statistic_list', 'statistic', '[0],[dashboard],[statistic],', '统计信息列表', '', '/statistic/list', 5, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
 INSERT INTO `sys_menu` VALUES (200, 'statistic_detail', 'statistic', '[0],[dashboard],[statistic],', '统计信息详情', '', '/statistic/detail', 6, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+
+INSERT INTO `sys_menu` VALUES (201, 'applicationDetail', 'dashboard', '[0],[dashboard],', '数据明细管理', NULL, '/applicationDetail', 3, 2, 'Y', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (202, 'applicationDetail_add', 'applicationDetail', '[0],[dashboard],[applicationDetail],', '添加数据明细', NULL, '/applicationDetail/add', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (203, 'applicationDetail_update', 'applicationDetail', '[0],[dashboard],[applicationDetail],', '修改数据明细', NULL, '/applicationDetail/update', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (204, 'applicationDetail_delete', 'applicationDetail', '[0],[dashboard],[applicationDetail],', '删除数据明细', NULL, '/applicationDetail/delete', 1, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (205, 'to_applicationDetail_update', 'applicationDetail', '[0],[dashboard],[applicationDetail],', '修改数据明细跳转', '', '/applicationDetail/applicationDetail_update', 4, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (206, 'applicationDetail_list', 'applicationDetail', '[0],[dashboard],[applicationDetail],', '数据明细列表', '', '/applicationDetail/list', 5, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (207, 'applicationDetail_detail', 'applicationDetail', '[0],[dashboard],[applicationDetail],', '数据明细详情', '', '/applicationDetail/detail', 6, 3, 'N', NULL, 'ENABLE', NULL, NULL, NULL, '2019-03-29 16:32:27', NULL, 1);
 -- ----------------------------
 -- Table structure for sys_notice
 -- ----------------------------
@@ -548,5 +556,25 @@ CREATE TABLE `business_application_form`  (
   PRIMARY KEY (`application_form_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '申请单表' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for business_statistic
+-- ----------------------------
+DROP TABLE IF EXISTS `business_statistic`;
+CREATE TABLE `business_statistic`  (
+  `statistic_id` bigint(20) NOT NULL COMMENT '主键',
+  `province_Id` bigint(20) DEFAULT NULL COMMENT '地市',
+  `main_num` bigint(20) DEFAULT NULL COMMENT '主单数',
+  `detail_num` bigint(20) DEFAULT NULL COMMENT '明细数',
+  `has_discharge_num` bigint(20) DEFAULT NULL COMMENT '出院诊断数',
+  `medical_treatment_id` bigint(20) DEFAULT NULL COMMENT '就医方式',
+  `begin_date` varchar(7) DEFAULT NULL COMMENT '开始日期',
+  `end_date` varchar(7) DEFAULT NULL COMMENT '结束日期',
+  `continuation_id` bigint(20) DEFAULT NULL COMMENT '是否连续',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `create_user` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  `update_user` bigint(20) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`statistic_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '统计信息表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -68,11 +68,9 @@ public class ApplicationFormWrapper extends BaseControllerWrapper {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Timestamp applicationTime = (Timestamp) map.get("applicationTime");
-        simpleDateFormat.format(applicationTime);
         map.put("applicationTime", simpleDateFormat.format(applicationTime));
 
         Timestamp receiveTime = (Timestamp) map.get("receiveTime");
-        simpleDateFormat.format(receiveTime);
         map.put("receiveTime", simpleDateFormat.format(receiveTime));
     }
 }

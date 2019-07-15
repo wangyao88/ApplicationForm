@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.business.mapper.StatisticMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.business.entity.Statistic">
+        <id column="statistic_id" property="statisticId" />
+        <result column="province_Id" property="provinceId" />
+        <result column="main_num" property="mainNum" />
+        <result column="detail_num" property="detailNum" />
+        <result column="has_discharge_num" property="hasDischargeNum" />
+        <result column="medical_treatment_id" property="medicalTreatmentId" />
+        <result column="begin_date" property="beginDate" />
+        <result column="end_date" property="endDate" />
+        <result column="continuation_id" property="continuationId" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_user" property="updateUser" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        statistic_id AS "statisticId", province_Id AS "provinceId", main_num AS "mainNum", detail_num AS "detailNum", has_discharge_num AS "hasDischargeNum",
+        medical_treatment_id AS "medicalTreatmentId", begin_date AS "beginDate", end_date AS "endDate", continuation_id AS "continuationId",
+        create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser"
+    </sql>
+
+    <select id="list" resultType="map">
+        select
+        <include refid="Base_Column_List"></include>
+        from business_statistic
+        order by create_time DESC
+    </select>
+
+</mapper>

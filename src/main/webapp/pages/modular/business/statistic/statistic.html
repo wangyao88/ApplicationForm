@@ -1,7 +1,7 @@
-@layout("/common/_container.html",{plugins:["ztree"],js:["/assets/modular/business/applicationForm/applicationForm.js"]}){
+@layout("/common/_container.html",{plugins:["ztree"],js:["/assets/modular/business/statistic/statistic.js"]}){
 
 <div class="layui-body-header">
-    <span class="layui-body-header-title">申请单管理</span>
+    <span class="layui-body-header-title">统计信息管理</span>
 </div>
 
 <div class="layui-fluid">
@@ -12,17 +12,17 @@
                     <div class="layui-form toolbar">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <input id="condition" class="layui-input" type="text" placeholder="项目名称"/>
+                                <input id="condition" class="layui-input" type="text" placeholder="地市名称"/>
                             </div>
                             <div class="layui-inline">
                                 <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-                                @if(shiro.hasPermission("/applicationForm/add")){
+                                @if(shiro.hasPermission("/statistic/add")){
                                 <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
                                 @}
                             </div>
                         </div>
                     </div>
-                    <table class="layui-table" id="applicationFormTable" lay-filter="applicationFormTable"></table>
+                    <table class="layui-table" id="statisticTable" lay-filter="statisticTable"></table>
                 </div>
             </div>
         </div>
@@ -30,10 +30,13 @@
 </div>
 
 <script type="text/html" id="tableBar">
-    @if(shiro.hasPermission("/applicationForm/update")){
+    @if(shiro.hasPermission("/applicationDetail")){
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">数据分布情况</a>
+    @}
+    @if(shiro.hasPermission("/statistic/update")){
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     @}
-    @if(shiro.hasPermission("/applicationForm/delete")){
+    @if(shiro.hasPermission("/statistic/delete")){
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
     @}
 </script>

@@ -1,0 +1,58 @@
+@layout("/common/_container.html",{bg:"bg-white",js:["/assets/modular/business/statistic/statistic_add.js"]}){
+<form id="statisticForm" lay-filter="statisticForm" class="layui-form model-form">
+    <input name="statisticId" type="hidden"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">省市<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input id="provinceId" name="provinceId" type="hidden">
+            <input id="provinceName" name="provinceName" placeholder="请输入地市" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">主单数<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input name="mainNum" placeholder="请输入主单数" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">明细数<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input name="detailNum" placeholder="请输入明细数" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">出院诊断数<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input id="hasDischargeNum" name="hasDischargeNum" placeholder="请输入出院诊断数" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">就医方式<span style="color: red;">*</span></label>
+        <div class="layui-inline">
+            <select id="medicalTreatmentSelect" name="medicalTreatmentId"></select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开始日期<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input id="beginDate" name="beginDate" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">结束日期<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input id="endDate" name="endDate" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否连续<span style="color: red;">*</span></label>
+        <div class="layui-inline">
+            <select id="continuationSelect" name="continuationId"></select>
+        </div>
+    </div>
+    <div class="layui-form-item text-right">
+        <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+    </div>
+</form>
+@}
