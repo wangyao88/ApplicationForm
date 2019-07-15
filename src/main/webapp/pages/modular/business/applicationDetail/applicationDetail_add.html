@@ -1,0 +1,31 @@
+@layout("/common/_container.html",{js:["/assets/modular/business/applicationDetail/applicationDetail_add.js"]}){
+
+<div class="layui-fluid " style="">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form id="applicationDetailForm" lay-filter="applicationDetailForm" class="layui-form model-form" style="max-width: 700px;margin: 40px auto;">
+                <input id="applicationDetailId" name="applicationDetailId" type="hidden"/>
+                <input id="statisticId" name="statisticId" type="hidden" value="${statisticId}"/>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">日期<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="detailDate" name="detailDate" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数量<span style="color: red;">*</span></label>
+                    <div class="layui-input-block">
+                        <input id="num" name="num" placeholder="请输入数量" type="text" class="layui-input" lay-verify="required" required/>
+                    </div>
+                </div>
+                <div class="layui-form-item text-right">
+                    <button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+                    <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog" id="backupPage">返回</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@}

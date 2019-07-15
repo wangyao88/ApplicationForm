@@ -26,8 +26,8 @@ public class ApplicationDetailService extends ServiceImpl<ApplicationDetailMappe
      * @author fengshuonan
      * @Date 2018/12/23 6:05 PM
      */
-    public Page<Map<String, Object>> list(String condition) {
+    public Page<Map<String, Object>> list(Long statisticId) {
         Page page = LayuiPageFactory.defaultPage();
-        return this.baseMapper.list(page, condition);
+        return this.baseMapper.list(page, statisticId);
     }
 }

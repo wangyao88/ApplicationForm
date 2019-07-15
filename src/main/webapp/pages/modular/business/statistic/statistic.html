@@ -19,6 +19,7 @@
                                 @if(shiro.hasPermission("/statistic/add")){
                                 <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
                                 @}
+                                <button id="btnImp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导入</button>
                             </div>
                         </div>
                     </div>
@@ -31,7 +32,7 @@
 
 <script type="text/html" id="tableBar">
     @if(shiro.hasPermission("/applicationDetail")){
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">数据分布情况</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">数据分布情况</a>
     @}
     @if(shiro.hasPermission("/statistic/update")){
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>

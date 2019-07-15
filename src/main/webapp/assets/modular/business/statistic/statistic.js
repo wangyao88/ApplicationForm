@@ -93,6 +93,14 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
         Feng.confirm("是否删除统计信息?", operation);
     };
 
+    Statistic.onDetailStatistic = function (data) {
+        window.location.href = '/applicationDetail?statisticId=' + data.statisticId;
+    };
+
+    Statistic.importExcel = function() {
+
+    };
+
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + Statistic.tableId,
@@ -113,6 +121,11 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
         Statistic.openAddStatistic();
     });
 
+    // 导入excel
+    $('#btnImp').click(function () {
+        Statistic.importExcel();
+    });
+
     // 工具条点击事件
     table.on('tool(' + Statistic.tableId + ')', function (obj) {
         var data = obj.data;
@@ -122,6 +135,8 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
             Statistic.onEditStatistic(data);
         } else if (layEvent === 'delete') {
             Statistic.onDeleteStatistic(data);
+        } else if (layEvent === 'detail') {
+            Statistic.onDetailStatistic(data);
         }
     });
 });

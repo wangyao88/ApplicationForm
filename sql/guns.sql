@@ -577,4 +577,20 @@ CREATE TABLE `business_statistic`  (
   PRIMARY KEY (`statistic_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '统计信息表' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for business_application_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `business_application_detail`;
+CREATE TABLE `business_application_detail`  (
+  `application_detail_id` bigint(20) NOT NULL COMMENT '主键',
+  `statistic_id` bigint(20) DEFAULT NULL COMMENT '统计信息',
+  `num` bigint(20) DEFAULT NULL COMMENT '数量',
+  `detail_date` varchar(7) DEFAULT NULL COMMENT '日期',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `create_user` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  `update_user` bigint(20) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`application_detail_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '统计信息明细表' ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;

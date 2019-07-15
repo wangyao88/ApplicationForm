@@ -173,6 +173,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
 
         <!--需要分布式session的话需要放开注释-->
         <!--<dependency>-->

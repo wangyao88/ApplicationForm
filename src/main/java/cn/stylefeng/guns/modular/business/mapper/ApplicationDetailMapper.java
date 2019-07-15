@@ -20,5 +20,5 @@ public interface ApplicationDetailMapper extends BaseMapper<ApplicationDetail> {
     /**
      * 获取项目列表
      */
-    Page<Map<String, Object>> list(@Param("page") Page page, @Param("condition") String condition);
+    Page<Map<String, Object>> list(@Param("page") Page page, @Param("statisticId") Long statisticId);
 }

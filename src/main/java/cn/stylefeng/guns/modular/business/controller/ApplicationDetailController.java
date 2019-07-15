@@ -60,8 +60,8 @@ public class ApplicationDetailController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        Page<Map<String, Object>> list = this.applicationDetailService.list(condition);
+    public Object list(Long statisticId) {
+        Page<Map<String, Object>> list = this.applicationDetailService.list(statisticId);
         Page<Map<String, Object>> wrap = new ApplicationDetailWrapper(list).wrap();
         return LayuiPageFactory.createPageInfo(wrap);
     }

@@ -16,7 +16,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        application_detail_id AS "applicationDetailId", statistic_id AS "statisticId", num AS "num", detail_date AS "detail_date",
+        application_detail_id AS "applicationDetailId", statistic_id AS "statisticId", num AS "num", detail_date AS "detailDate",
         create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser"
     </sql>
 
@@ -24,6 +24,7 @@
         select
         <include refid="Base_Column_List"></include>
         from business_application_detail
+        where statistic_id = #{statisticId}
         order by create_time DESC
     </select>
 
