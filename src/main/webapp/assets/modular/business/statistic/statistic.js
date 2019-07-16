@@ -20,6 +20,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'statisticId', hide: true, sort: true, title: 'id'},
+            {field: 'applicationFormId', sort: true, title: '申请单编号'},
             {field: 'provinceName', sort: true, title: '地市'},
             {field: 'mainNum', sort: true, title: '主单数'},
             {field: 'detailNum', sort: true, title: '明细数'},
@@ -38,7 +39,8 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
      */
     Statistic.search = function () {
         var queryData = {};
-        queryData['condition'] = $("#condition").val();
+        queryData['applicationFormId'] = $("#applicationFormId").val();
+        queryData['provinceName'] = $("#provinceName").val();
         table.reload(Statistic.tableId, {where: queryData});
     };
 
@@ -97,19 +99,6 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
         window.location.href = '/applicationDetail?statisticId=' + data.statisticId;
     };
 
-    Statistic.importExcel = function() {
-        window.location.href = '/statistic/statistic_import';
-        // admin.putTempData('formOk', false);
-        // top.layui.admin.open({
-        //     type: 2,
-        //     title: '导入统计信息',
-        //     content: Feng.ctxPath + '/statistic/statistic_import',
-        //     end: function () {
-        //         admin.getTempData('formOk') && table.reload(Statistic.tableId);
-        //     }
-        // });
-    };
-
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + Statistic.tableId,
@@ -128,11 +117,6 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
     // 添加按钮点击事件
     $('#btnAdd').click(function () {
         Statistic.openAddStatistic();
-    });
-
-    // 导入excel
-    $('#btnImp').click(function () {
-        Statistic.importExcel();
     });
 
     // 工具条点击事件

@@ -40,6 +40,10 @@ layui.use(['table', 'ax'], function () {
         window.location.href = Feng.ctxPath + '/applicationDetail/applicationDetail_add?statisticId=' + $("#statisticId").val();
     };
 
+    ApplicationDetail.openBatchAddDlg = function() {
+        window.location.href = Feng.ctxPath + '/applicationDetail/applicationDetail_batch_add?statisticId=' + $("#statisticId").val();
+    };
+
     /**
      * 点击编辑
      *
@@ -93,6 +97,10 @@ layui.use(['table', 'ax'], function () {
     // 添加按钮点击事件
     $('#btnAdd').click(function () {
         ApplicationDetail.openAddDlg();
+    });
+
+    $('#btnBatchAdd').click(function () {
+        ApplicationDetail.openBatchAddDlg();
     });
 
     // 关闭页面

@@ -5,6 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.business.entity.Statistic">
         <id column="statistic_id" property="statisticId" />
+        <result column="applicationForm_Id" property="applicationFormId" />
         <result column="province_Id" property="provinceId" />
         <result column="main_num" property="mainNum" />
         <result column="detail_num" property="detailNum" />
@@ -21,7 +22,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        statistic_id AS "statisticId", province_Id AS "provinceId", main_num AS "mainNum", detail_num AS "detailNum", has_discharge_num AS "hasDischargeNum",
+        statistic_id AS "statisticId", applicationForm_Id AS "applicationFormId", province_Id AS "provinceId", main_num AS "mainNum", detail_num AS "detailNum", has_discharge_num AS "hasDischargeNum",
         medical_treatment AS "medicalTreatment", begin_date AS "beginDate", end_date AS "endDate", continuation_id AS "continuationId",
         create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser"
     </sql>
@@ -30,14 +31,21 @@
         select
         <include refid="Base_Column_List"></include>
         from business_statistic
+        where 1=1
+        <if test="applicationFormId != null">
+            and applicationForm_Id=#{applicationFormId}
+        </if>
         order by create_time DESC
     </select>
 
     <select id="listCondition" resultType="map">
         select
         <include refid="Base_Column_List"></include>
-        from business_statistic where province_Id in
-        (select province_id from business_province where full_name like #{condition})
+        from business_statistic where 1=1
+        <if test="applicationFormId != null">
+            and applicationForm_Id=#{applicationFormId}
+        </if>
+        and province_Id in (select province_id from business_province where full_name like #{provinceName})
         order by create_time DESC
     </select>
 

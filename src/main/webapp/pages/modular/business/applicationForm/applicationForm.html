@@ -30,6 +30,9 @@
 </div>
 
 <script type="text/html" id="tableBar">
+    @if(shiro.hasPermission("/statistic/statistic_import")){
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="import">导入明细信息</a>
+    @}
     @if(shiro.hasPermission("/applicationForm/update")){
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     @}

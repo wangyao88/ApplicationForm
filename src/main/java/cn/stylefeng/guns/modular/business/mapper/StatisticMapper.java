@@ -20,7 +20,7 @@ public interface StatisticMapper extends BaseMapper<Statistic> {
     /**
      * 获取项目列表
      */
-    Page<Map<String, Object>> listAll(@Param("page") Page page);
+    Page<Map<String, Object>> listAll(@Param("page") Page page, @Param("applicationFormId") Long applicationFormId);
 
-    Page<Map<String, Object>> listCondition(@Param("page") Page page, @Param("condition") String condition);
+    Page<Map<String, Object>> listCondition(@Param("page") Page page, @Param("applicationFormId") Long applicationFormId, @Param("provinceName") String provinceName);
 }

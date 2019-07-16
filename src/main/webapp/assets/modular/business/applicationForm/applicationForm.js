@@ -19,10 +19,10 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
     ApplicationForm.initColumn = function () {
         return [[
             {type: 'checkbox'},
-            {field: 'applicationFormId', hide: true, sort: true, title: 'id'},
+            {field: 'applicationFormId', sort: true, title: '编号'},
             {field: 'applicationFormTypeName', sort: true, title: '申请单类型'},
             {field: 'applicationUserName', sort: true, title: '申请人'},
-            {field: 'projectTitle', sort: true, title: '所属名称'},
+            {field: 'projectTitle', sort: true, title: '所属项目'},
             {field: 'applicationTime', sort: true, title: '申请日期'},
             {field: 'applicationUserDeptName', sort: true, title: '使用部门'},
             {field: 'applicationUserEmail', sort: true, title: 'Email'},
@@ -95,6 +95,10 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
         Feng.confirm("是否删除申请单?", operation);
     };
 
+    ApplicationForm.onImportApplicationForm = function(data) {
+        window.location.href = Feng.ctxPath + '/statistic/statistic_import?applicationFormId=' + data.applicationFormId;
+    };
+
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + ApplicationForm.tableId,
@@ -124,6 +128,8 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
             ApplicationForm.onEditApplicationForm(data);
         } else if (layEvent === 'delete') {
             ApplicationForm.onDeleteApplicationForm(data);
+        } else if (layEvent === 'import') {
+            ApplicationForm.onImportApplicationForm(data);
         }
     });
 });

@@ -67,4 +67,5 @@ public interface Const {
      */
     List<String> NONE_PERMISSION_RES = CollectionUtil.newLinkedList("/assets/**", "/gunsApi/**", "/login", "/global/sessionError", "/kaptcha", "/error", "/global/error");
 
+    String APPLICATIONfORM_ID_FOR_IMPORT = "applicationformIdForImport";
 }

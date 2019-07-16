@@ -68,6 +68,9 @@ public class ApplicationDetail implements Serializable{
     @TableField(value = "update_user", fill = FieldFill.UPDATE)
     private Long updateUser;
 
+    @TableField(exist = false)
+    private String content;
+
     public int getDateNum() {
         return Integer.parseInt(this.getDetailDate().substring(0, 4)) + Integer.parseInt(this.getDetailDate().substring(5, 7));
     }

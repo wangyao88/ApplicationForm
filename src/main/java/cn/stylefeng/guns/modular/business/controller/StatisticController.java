@@ -19,14 +19,17 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.stylefeng.guns.config.properties.GunsProperties;
 import cn.stylefeng.guns.core.common.annotion.BussinessLog;
 import cn.stylefeng.guns.core.common.annotion.Permission;
+import cn.stylefeng.guns.core.common.constant.Const;
 import cn.stylefeng.guns.core.common.constant.dictmap.DeleteDict;
 import cn.stylefeng.guns.core.common.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.core.common.exception.BizExceptionEnum;
 import cn.stylefeng.guns.core.common.page.LayuiPageFactory;
 import cn.stylefeng.guns.core.log.LogObjectHolder;
 import cn.stylefeng.guns.core.shiro.ShiroKit;
+import cn.stylefeng.guns.modular.business.entity.ApplicationForm;
 import cn.stylefeng.guns.modular.business.entity.Statistic;
 import cn.stylefeng.guns.modular.business.model.StatisticDto;
+import cn.stylefeng.guns.modular.business.service.ApplicationFormService;
 import cn.stylefeng.guns.modular.business.service.ProjectService;
 import cn.stylefeng.guns.modular.business.service.StatisticService;
 import cn.stylefeng.guns.modular.business.warpper.StatisticWrapper;
@@ -47,9 +50,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 统计信息控制器
@@ -73,6 +78,8 @@ public class StatisticController extends BaseController {
     private DictService dictService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ApplicationFormService applicationFormService;
 
     /**
      * 跳转到统计信息列表首页
@@ -104,14 +111,14 @@ public class StatisticController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
+    public Object list(@RequestParam(name = "applicationFormId", required = false) Long applicationFormId, @RequestParam(name = "provinceName", required = false) String provinceName) {
         Page<Map<String, Object>> wrap;
-        if(StringUtils.isBlank(condition)) {
-            Page<Map<String, Object>> list = this.statisticService.listAll();
+        if(StringUtils.isBlank(provinceName)) {
+            Page<Map<String, Object>> list = this.statisticService.listAll(applicationFormId);
             wrap = new StatisticWrapper(list).wrap();
         }else {
-            condition = Joiner.on(StringUtils.EMPTY).join("%", condition, "%");
-            Page<Map<String, Object>> list = this.statisticService.listCondition(condition);
+            provinceName = Joiner.on(StringUtils.EMPTY).join("%", provinceName, "%");
+            Page<Map<String, Object>> list = this.statisticService.listCondition(applicationFormId, provinceName);
             wrap = new StatisticWrapper(list).wrap();
         }
         return LayuiPageFactory.createPageInfo(wrap);
@@ -127,8 +134,13 @@ public class StatisticController extends BaseController {
     @ResponseBody
     @BussinessLog(value = "新增统计信息", key = "statisticId")
     public Object add(Statistic statistic) {
-        if (ToolUtil.isOneEmpty(statistic, statistic.getProvinceId())) {
+        Long applicationFormId = statistic.getApplicationFormId();
+        if (ToolUtil.isOneEmpty(statistic, statistic.getProvinceId(), applicationFormId)) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        ApplicationForm applicationForm = applicationFormService.getById(applicationFormId);
+        if(Objects.isNull(applicationForm)) {
+            throw new ServiceException(403, "无此申请单编号");
         }
         statistic.setCreateUser(ShiroKit.getUserNotNull().getId());
         statistic.setCreateTime(new Date());
@@ -195,8 +207,13 @@ public class StatisticController extends BaseController {
     @ResponseBody
     @BussinessLog(value = "修改统计信息", key = "statisticId")
     public Object update(Statistic statistic) {
-        if (ToolUtil.isOneEmpty(statistic, statistic.getStatisticId(), statistic.getProvinceId())) {
+        Long applicationFormId = statistic.getApplicationFormId();
+        if (ToolUtil.isOneEmpty(statistic, statistic.getStatisticId(), statistic.getProvinceId(), applicationFormId)) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        ApplicationForm applicationForm = applicationFormService.getById(applicationFormId);
+        if(Objects.isNull(applicationForm)) {
+            throw new ServiceException(403, "无此申请单编号");
         }
         Statistic old = this.statisticService.getById(statistic.getStatisticId());
         old.setProvinceId(statistic.getProvinceId());
@@ -233,19 +250,22 @@ public class StatisticController extends BaseController {
      * @Date 2018/12/23 6:06 PM
      */
     @RequestMapping("/statistic_import")
-    public String go_importExcel() {
+    public String goImportExcel(@RequestParam("applicationFormId") Long applicationFormId, HttpServletRequest request) {
+        request.getSession().setAttribute(Const.APPLICATIONfORM_ID_FOR_IMPORT, applicationFormId);
         return PREFIX + "statistic_import.html";
     }
 
     @PostMapping("/importExcel")
     @ResponseBody
-    public Object importExcel(@RequestParam("file") MultipartFile excel) {
+    public Object importExcel(@RequestParam("file") MultipartFile excel, HttpServletRequest request) {
         String fileName = excel.getOriginalFilename();
         if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
             throw new ServiceException(403, "上传文件格式不正确");
         }
         try {
-            this.statisticService.importExcel(fileName, excel);
+            Object attribute = request.getSession().getAttribute(Const.APPLICATIONfORM_ID_FOR_IMPORT);
+            Long applicationFormId = Long.valueOf(String.valueOf(attribute));
+            this.statisticService.importExcel(applicationFormId, fileName, excel);
         } catch (ServiceException e) {
             throw new ServiceException(500, "上传文件失败！");
         }

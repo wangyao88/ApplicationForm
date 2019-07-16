@@ -23,6 +23,11 @@ public class StatisticDto implements Serializable {
     private Long statisticId;
 
     /**
+     * 申请单ID
+     */
+    private Long applicationFormId;
+
+    /**
      * 地市ID
      */
     private Long provinceId;

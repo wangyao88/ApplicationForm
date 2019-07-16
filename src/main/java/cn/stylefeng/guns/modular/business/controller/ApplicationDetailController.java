@@ -92,6 +92,31 @@ public class ApplicationDetailController extends BaseController {
     }
 
     /**
+     * 新增页面
+     *
+     * @author stylefeng
+     * @Date 2019-03-13
+     */
+    @RequestMapping("/applicationDetail_batch_add")
+    public String batchAdd(@RequestParam("statisticId") Long statisticId, Model model) {
+        model.addAttribute("statisticId", statisticId);
+        return PREFIX + "/applicationDetail_batch_add.html";
+    }
+
+    @PostMapping("/batch_add")
+    @ResponseBody
+    @BussinessLog(value = "新增统计信息明细", key = "applicationDetailId")
+    public Object batchAdd(ApplicationDetail applicationDetail) {
+        if (ToolUtil.isOneEmpty(applicationDetail, applicationDetail.getStatisticId(), applicationDetail.getContent())) {
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        applicationDetail.setCreateUser(ShiroKit.getUserNotNull().getId());
+        applicationDetail.setCreateTime(new Date());
+        this.applicationDetailService.batchSave(applicationDetail);
+        return SUCCESS_TIP;
+    }
+
+    /**
      * 编辑页面
      *
      * @author stylefeng

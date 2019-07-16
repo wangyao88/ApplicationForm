@@ -29,6 +29,12 @@ public class Statistic implements Serializable {
     private Long statisticId;
 
     /**
+     * 申请单ID
+     */
+    @TableField("applicationForm_Id")
+    private Long applicationFormId;
+
+    /**
      * 地市ID
      */
     @TableField("province_Id")

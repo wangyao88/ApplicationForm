@@ -56,10 +56,11 @@ public class StatisticService extends ServiceImpl<StatisticMapper, Statistic> {
      *
      * @author fengshuonan
      * @Date 2018/12/23 6:05 PM
+     * @param applicationFormId
      */
-    public Page<Map<String, Object>> listAll() {
+    public Page<Map<String, Object>> listAll(Long applicationFormId) {
         Page page = LayuiPageFactory.defaultPage();
-        return this.baseMapper.listAll(page);
+        return this.baseMapper.listAll(page, applicationFormId);
     }
 
     /**
@@ -68,13 +69,13 @@ public class StatisticService extends ServiceImpl<StatisticMapper, Statistic> {
      * @author fengshuonan
      * @Date 2018/12/23 6:05 PM
      */
-    public Page<Map<String, Object>> listCondition(String condition) {
+    public Page<Map<String, Object>> listCondition(Long applicationFormId, String condition) {
         Page page = LayuiPageFactory.defaultPage();
-        return this.baseMapper.listCondition(page, condition);
+        return this.baseMapper.listCondition(page, applicationFormId, condition);
     }
 
     @Transactional(rollbackFor = ServiceException.class)
-    public void importExcel(String fileName, MultipartFile excel){
+    public void importExcel(Long applicationFormId, String fileName, MultipartFile excel){
         List<Object> data = Lists.newArrayList();
         try {
             @Cleanup
@@ -90,7 +91,7 @@ public class StatisticService extends ServiceImpl<StatisticMapper, Statistic> {
         List<Statistic> statistics = Lists.newArrayList();
         data.stream().skip(2).map(obj -> (List)obj).forEach(eles -> {
             if(!Objects.isNull(eles.get(0))) {
-                Statistic currentStatistic = configureStatistic(eles);
+                Statistic currentStatistic = configureStatistic(applicationFormId, eles);
                 statistics.add(currentStatistic);
             }
             Statistic currentStatistic = getCurrentStatistic(statistics);
@@ -191,6 +192,10 @@ public class StatisticService extends ServiceImpl<StatisticMapper, Statistic> {
         return pattern.matcher(applicationDetail.getDetailDate()).matches();
     }
 
+    public boolean isDate(String date) {
+        return pattern.matcher(date).matches();
+    }
+
     private ApplicationDetail configureDetail(Statistic currentStatistic, List eles) {
         ApplicationDetail applicationDetail = new ApplicationDetail();
         try {
@@ -213,9 +218,10 @@ public class StatisticService extends ServiceImpl<StatisticMapper, Statistic> {
         return applicationDetail;
     }
 
-    private Statistic configureStatistic(List eles) {
+    private Statistic configureStatistic(Long applicationFormId, List eles) {
         Statistic statistic = new Statistic();
         try {
+            statistic.setApplicationFormId(applicationFormId);
             statistic.setStatisticId(IdWorker.getId());
             String provinceName = String.valueOf(eles.get(0)).replaceAll("医保", StringUtils.EMPTY);
             Long provinceId = ConstantFactory.me().getProvinceId(provinceName);

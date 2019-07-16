@@ -12,15 +12,16 @@
                     <div class="layui-form toolbar">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <input id="condition" class="layui-input" type="text" placeholder="地市名称"/>
+                                <input id="applicationFormId" class="layui-input" type="text" placeholder="申请单编号"/>
+                            </div>
+                            <div class="layui-inline">
+                                <input id="provinceName" class="layui-input" type="text" placeholder="地市名称"/>
                             </div>
                             <div class="layui-inline">
                                 <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
                                 @if(shiro.hasPermission("/statistic/add")){
                                 <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
                                 @}
-                                <button id="btnImp" class="layui-btn icon-btn"><i class="layui-icon">&#xe67d;</i>导入</button>
-                            </div>
                         </div>
                     </div>
                     <table class="layui-table" id="statisticTable" lay-filter="statisticTable"></table>

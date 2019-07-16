@@ -562,6 +562,7 @@ CREATE TABLE `business_application_form`  (
 DROP TABLE IF EXISTS `business_statistic`;
 CREATE TABLE `business_statistic`  (
   `statistic_id` bigint(20) NOT NULL COMMENT '主键',
+  `applicationForm_Id` bigint(20) DEFAULT NULL COMMENT '申请单ID',
   `province_Id` bigint(20) DEFAULT NULL COMMENT '地市',
   `main_num` bigint(20) DEFAULT NULL COMMENT '主单数',
   `detail_num` bigint(20) DEFAULT NULL COMMENT '明细数',
