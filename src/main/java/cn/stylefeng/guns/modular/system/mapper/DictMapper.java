@@ -29,4 +29,8 @@ public interface DictMapper extends BaseMapper<Dict> {
     List<Dict> likeParentIds(@Param("dictId") Long dictId);
 
     List<DictDto> getDictByTypeId(@Param("typeId") Long typeId);
+
+    DictDto getDictByCode(@Param("code") String code);
+
+    DictDto getDictByName(@Param("name") String name);
 }

@@ -80,6 +80,11 @@ public interface IConstantFactory {
     String getProvinceName(Long provinceId);
 
     /**
+     * 获取省市ID
+     */
+    Long getProvinceId(String provinceName);
+
+    /**
      * 获取菜单的名称们(多个)
      */
     String getMenuNames(String menuIds);
@@ -157,4 +162,8 @@ public interface IConstantFactory {
     String getProjectTitle(Long projectId);
 
     List<DictDto> getDictByTypeCode(String typeCode);
+
+    Long getDictByCode(String code);
+
+    Long getDictByName(String name);
 }

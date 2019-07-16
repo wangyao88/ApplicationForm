@@ -24,6 +24,7 @@ import cn.stylefeng.guns.core.common.node.TreeviewNode;
 import cn.stylefeng.guns.core.common.node.ZTreeNode;
 import cn.stylefeng.guns.core.common.page.LayuiPageFactory;
 import cn.stylefeng.guns.core.log.LogObjectHolder;
+import cn.stylefeng.guns.core.shiro.ShiroKit;
 import cn.stylefeng.guns.modular.business.entity.Province;
 import cn.stylefeng.guns.modular.business.model.ProvinceDto;
 import cn.stylefeng.guns.modular.business.service.ProvinceService;
@@ -34,7 +35,13 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.treebuild.DefaultTreeBuildFactory;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.base.Charsets;
+import com.google.common.base.Joiner;
+import com.google.common.io.Files;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,8 +49,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 省市控制器
@@ -150,6 +161,8 @@ public class ProvinceController extends BaseController {
     @Permission
     @ResponseBody
     public ResponseData add(Province province) {
+        province.setCreateUser(ShiroKit.getUserNotNull().getId());
+        province.setCreateTime(new Date());
         this.provinceService.addProvince(province);
         return SUCCESS_TIP;
     }
@@ -164,10 +177,55 @@ public class ProvinceController extends BaseController {
     @Permission
     @ResponseBody
     public Object list(@RequestParam(value = "condition", required = false) String condition,
-                       @RequestParam(value = "provinceId", required = false) Long provinceId) {
+                       @RequestParam(value = "provinceId", required = false) Long provinceId) throws IOException {
         Page<Map<String, Object>> list = this.provinceService.list(condition, provinceId);
         Page<Map<String, Object>> wrap = new ProvinceWrapper(list).wrap();
         return LayuiPageFactory.createPageInfo(wrap);
+    }
+
+    private void addData() throws IOException {
+        Long userId = ShiroKit.getUserNotNull().getId();
+        Date createTime = new Date();
+        String path = "/Users/localadmin/temp/province.txt";
+        File file = new File(path);
+        List<String> lines = Files.readLines(file, Charsets.UTF_8);
+        String jsonStr = Joiner.on(StringUtils.EMPTY).join(lines);
+        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+        Set<String> keys = jsonObject.keySet();
+        int num = 0;
+        for (String key : keys) {
+            Province province = new Province();
+            province.setProvinceId(IdWorker.getId());
+            province.setPid(0L);
+            province.setPids("[0],");
+            province.setFullName(key);
+            province.setSimpleName(key);
+            province.setDescription(key);
+            province.setSort(++num);
+            province.setCreateUser(userId);
+            province.setCreateTime(createTime);
+            this.provinceService.save(province);
+            List lists = jsonObject.getObject(key, List.class);
+            int sort = 0;
+            for (int i = 0; i < lists.size(); i++) {
+                String name = lists.get(i).toString();
+                if(!name.contains("地区") && !name.contains("州") && !name.contains("县") && !name.contains("市")) {
+                    name += "市";
+                }
+                Province subProvince = new Province();
+                subProvince.setProvinceId(IdWorker.getId());
+                subProvince.setPid(province.getProvinceId());
+                subProvince.setPids("[0],["+province.getProvinceId()+"],");
+                subProvince.setFullName(name);
+                subProvince.setSimpleName(name);
+                subProvince.setDescription(name);
+                subProvince.setSort(++sort);
+                subProvince.setCreateUser(userId);
+                subProvince.setCreateTime(createTime);
+                this.provinceService.save(subProvince);
+            }
+        }
+        System.out.println(jsonObject);
     }
 
     /**

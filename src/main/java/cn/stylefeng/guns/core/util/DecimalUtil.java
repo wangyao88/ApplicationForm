@@ -19,18 +19,25 @@ public class DecimalUtil {
      */
     public static Long getLong(Object object) {
         if (object == null) {
-            return null;
+            return 0L;
         }
-        if (object instanceof BigDecimal) {
-            return ((BigDecimal) object).longValue();
+        try {
+            if (object instanceof BigDecimal) {
+                return ((BigDecimal) object).longValue();
+            }
+            if (object instanceof BigInteger) {
+                return ((BigInteger) object).longValue();
+            }
+            if (object instanceof Long) {
+                return ((Long) object);
+            }
+            if (object instanceof String) {
+                return Long.valueOf(String.valueOf(object));
+            }
+        } catch (NumberFormatException e) {
+            return 0L;
         }
-        if (object instanceof BigInteger) {
-            return ((BigInteger) object).longValue();
-        }
-        if (object instanceof Long) {
-            return ((Long) object);
-        }
-        return null;
+        return 0L;
     }
 
 }

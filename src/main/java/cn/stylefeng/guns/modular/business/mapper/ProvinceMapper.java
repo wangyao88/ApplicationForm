@@ -39,4 +39,6 @@ public interface ProvinceMapper extends BaseMapper<Province> {
      * where pids like ''
      */
     List<Province> likePids(@Param("provinceId") Long provinceId);
+
+    List<Province> selectByName(@Param("provinceName") String provinceName);
 }

@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @Data
 @TableName("business_application_detail")
-public class ApplicationDetail implements Serializable {
+public class ApplicationDetail implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -67,4 +67,8 @@ public class ApplicationDetail implements Serializable {
      */
     @TableField(value = "update_user", fill = FieldFill.UPDATE)
     private Long updateUser;
+
+    public int getDateNum() {
+        return Integer.parseInt(this.getDetailDate().substring(0, 4)) + Integer.parseInt(this.getDetailDate().substring(5, 7));
+    }
 }

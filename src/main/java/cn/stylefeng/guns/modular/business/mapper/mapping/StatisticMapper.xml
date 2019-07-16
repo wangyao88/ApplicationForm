@@ -9,8 +9,7 @@
         <result column="main_num" property="mainNum" />
         <result column="detail_num" property="detailNum" />
         <result column="has_discharge_num" property="hasDischargeNum" />
-        <result column="out_patient_num" property="outPatientNum" />
-        <result column="hospital_num" property="hospitalNum" />
+        <result column="medical_treatment;" property="medicalTreatment" />
         <result column="begin_date" property="beginDate" />
         <result column="end_date" property="endDate" />
         <result column="continuation_id" property="continuationId" />
@@ -23,7 +22,7 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         statistic_id AS "statisticId", province_Id AS "provinceId", main_num AS "mainNum", detail_num AS "detailNum", has_discharge_num AS "hasDischargeNum",
-        out_patient_num AS "outPatientNum", hospital_num AS "hospitalNum", begin_date AS "beginDate", end_date AS "endDate", continuation_id AS "continuationId",
+        medical_treatment AS "medicalTreatment", begin_date AS "beginDate", end_date AS "endDate", continuation_id AS "continuationId",
         create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser"
     </sql>
 

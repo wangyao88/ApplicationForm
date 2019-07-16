@@ -44,8 +44,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -195,8 +193,7 @@ public class StatisticController extends BaseController {
         old.setMainNum(statistic.getMainNum());
         old.setDetailNum(statistic.getDetailNum());
         old.setHasDischargeNum(statistic.getHasDischargeNum());
-        old.setOutPatientNum(statistic.getOutPatientNum());
-        old.setHospitalNum(statistic.getHospitalNum());
+        old.setMedicalTreatment(statistic.getMedicalTreatment());
         old.setBeginDate(statistic.getBeginDate());
         old.setEndDate(statistic.getEndDate());
         old.setContinuationId(statistic.getContinuationId());
@@ -239,7 +236,7 @@ public class StatisticController extends BaseController {
         }
         try {
             this.statisticService.importExcel(fileName, excel);
-        } catch (IOException e) {
+        } catch (ServiceException e) {
             throw new ServiceException(500, "上传文件失败！");
         }
         return SUCCESS_TIP;

@@ -61,4 +61,7 @@
         </if>
     </select>
 
+    <select id="selectByName" resultType="cn.stylefeng.guns.modular.business.entity.Province">
+        select province_id AS "provinceId" from business_province where full_name like #{provinceName}
+    </select>
 </mapper>

@@ -1,10 +1,12 @@
 package cn.stylefeng.guns.modular.business.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.google.common.collect.Lists;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -51,16 +53,10 @@ public class Statistic implements Serializable {
     private Long hasDischargeNum;
 
     /**
-     * 就医方式 门诊数量
+     * 就医方式 数量
      */
-    @TableField("out_patient_num")
-    private Long outPatientNum;
-
-    /**
-     * 就医方式 住院数量
-     */
-    @TableField("hospital_num")
-    private Long hospitalNum;
+    @TableField("medical_treatment")
+    private String medicalTreatment;
 
     /**
      * 开始日期
@@ -79,6 +75,9 @@ public class Statistic implements Serializable {
      */
     @TableField("continuation_id")
     private Long continuationId;
+
+    @TableField(exist = false)
+    private List<ApplicationDetail> applicationDetails = Lists.newArrayList();
 
     /**
      * 创建时间
@@ -103,4 +102,8 @@ public class Statistic implements Serializable {
      */
     @TableField(value = "update_user", fill = FieldFill.UPDATE)
     private Long updateUser;
+
+    public void addApplicationDetail(ApplicationDetail applicationDetail) {
+        this.getApplicationDetails().add(applicationDetail);
+    }
 }

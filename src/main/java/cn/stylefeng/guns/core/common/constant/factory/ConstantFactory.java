@@ -15,6 +15,7 @@
  */
 package cn.stylefeng.guns.core.common.constant.factory;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import cn.stylefeng.guns.core.common.constant.cache.Cache;
@@ -32,6 +33,9 @@ import cn.stylefeng.guns.modular.system.model.DictDto;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.common.base.Joiner;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -163,6 +167,20 @@ public class ConstantFactory implements IConstantFactory {
             return "";
         }
     }
+
+    @Override
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.PROVINCE_NAME + "'+#provinceName")
+    public Long getProvinceId(String provinceName) {
+        if(StringUtils.isBlank(provinceName)) {
+            return -1L;
+        }
+        provinceName = Joiner.on(StringUtils.EMPTY).join("%" , provinceName, "%");
+        List<Province> provinces = provinceMapper.selectByName(provinceName);
+        if(CollectionUtil.isEmpty(provinces)) {
+            return -1L;
+        }
+        return provinces.get(0).getProvinceId();
+}
 
     @Override
     public String getMenuNames(String menuIds) {
@@ -376,5 +394,15 @@ public class ConstantFactory implements IConstantFactory {
     public List<DictDto> getDictByTypeCode(String typeCode) {
         Long typeId = dictTypeMapper.getIdByCode(typeCode);
         return dictMapper.getDictByTypeId(typeId);
+    }
+
+    @Override
+    public Long getDictByCode(String code) {
+        return dictMapper.getDictByCode(code).getDictId();
+    }
+
+    @Override
+    public Long getDictByName(String name) {
+        return dictMapper.getDictByName(name).getDictId();
     }
 }
