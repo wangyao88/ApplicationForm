@@ -57,9 +57,20 @@ public class StatisticService extends ServiceImpl<StatisticMapper, Statistic> {
      * @author fengshuonan
      * @Date 2018/12/23 6:05 PM
      */
-    public Page<Map<String, Object>> list(String condition) {
+    public Page<Map<String, Object>> listAll() {
         Page page = LayuiPageFactory.defaultPage();
-        return this.baseMapper.list(page, condition);
+        return this.baseMapper.listAll(page);
+    }
+
+    /**
+     * 获取统计信息列表
+     *
+     * @author fengshuonan
+     * @Date 2018/12/23 6:05 PM
+     */
+    public Page<Map<String, Object>> listCondition(String condition) {
+        Page page = LayuiPageFactory.defaultPage();
+        return this.baseMapper.listCondition(page, condition);
     }
 
     @Transactional(rollbackFor = ServiceException.class)

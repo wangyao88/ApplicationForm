@@ -38,7 +38,10 @@ import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -102,8 +105,15 @@ public class StatisticController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
-        Page<Map<String, Object>> list = this.statisticService.list(condition);
-        Page<Map<String, Object>> wrap = new StatisticWrapper(list).wrap();
+        Page<Map<String, Object>> wrap;
+        if(StringUtils.isBlank(condition)) {
+            Page<Map<String, Object>> list = this.statisticService.listAll();
+            wrap = new StatisticWrapper(list).wrap();
+        }else {
+            condition = Joiner.on(StringUtils.EMPTY).join("%", condition, "%");
+            Page<Map<String, Object>> list = this.statisticService.listCondition(condition);
+            wrap = new StatisticWrapper(list).wrap();
+        }
         return LayuiPageFactory.createPageInfo(wrap);
     }
 

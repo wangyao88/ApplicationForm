@@ -225,7 +225,6 @@ public class ProvinceController extends BaseController {
                 this.provinceService.save(subProvince);
             }
         }
-        System.out.println(jsonObject);
     }
 
     /**

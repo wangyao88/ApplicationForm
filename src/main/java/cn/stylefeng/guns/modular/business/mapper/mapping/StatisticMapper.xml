@@ -26,10 +26,18 @@
         create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser"
     </sql>
 
-    <select id="list" resultType="map">
+    <select id="listAll" resultType="map">
         select
         <include refid="Base_Column_List"></include>
         from business_statistic
+        order by create_time DESC
+    </select>
+
+    <select id="listCondition" resultType="map">
+        select
+        <include refid="Base_Column_List"></include>
+        from business_statistic where province_Id in
+        (select province_id from business_province where full_name like #{condition})
         order by create_time DESC
     </select>
 

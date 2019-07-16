@@ -20,6 +20,7 @@ import cn.stylefeng.guns.core.util.DecimalUtil;
 import cn.stylefeng.roses.core.base.warpper.BaseControllerWrapper;
 import cn.stylefeng.roses.kernel.model.page.PageResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -58,5 +59,9 @@ public class StatisticWrapper extends BaseControllerWrapper {
 
         Long continuationId = DecimalUtil.getLong(map.get("continuationId"));
         map.put("continuationName", ConstantFactory.me().getDictName(continuationId));
+
+        if("null".equalsIgnoreCase(String.valueOf(map.get("medicalTreatment")))) {
+            map.put("medicalTreatment", StringUtils.EMPTY);
+        }
     }
 }

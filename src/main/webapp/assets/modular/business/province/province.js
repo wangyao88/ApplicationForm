@@ -125,6 +125,7 @@ layui.use(['table', 'admin', 'ax', 'ztree'], function () {
     var ztree = new $ZTree("provinceTree", "/province/tree");
     ztree.bindOnClick(Province.onClickProvince);
     ztree.init();
+    // zTree.getZTreeObj("provinceTree").expandAll(false);
 
     // 搜索按钮点击事件
     $('#btnSearch').click(function () {
