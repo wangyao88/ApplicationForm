@@ -223,7 +223,7 @@ public class StatisticController extends BaseController {
         old.setMedicalTreatment(statistic.getMedicalTreatment());
         old.setBeginDate(statistic.getBeginDate());
         old.setEndDate(statistic.getEndDate());
-        old.setContinuationId(statistic.getContinuationId());
+        old.setContinuation(statistic.getContinuation());
         old.setUpdateUser(ShiroKit.getUserNotNull().getId());
         old.setUpdateTime(new Date());
         this.statisticService.updateById(old);

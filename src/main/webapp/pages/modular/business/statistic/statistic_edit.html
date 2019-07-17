@@ -4,7 +4,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">申请单编号<span style="color: red;">*</span></label>
         <div class="layui-input-block">
-            <input name="applicationFormId" placeholder="请输入申请单编号" type="text" class="layui-input" lay-verify="required" required/>
+            <input name="applicationFormId" placeholder="请输入申请单编号" type="text" class="layui-input" lay-verify="number" lay-verify="required" required/>
         </div>
     </div>
     <div class="layui-form-item">
@@ -29,19 +29,19 @@
     <div class="layui-form-item">
         <label class="layui-form-label">主单数<span style="color: red;">*</span></label>
         <div class="layui-input-block">
-            <input name="mainNum" placeholder="请输入主单数" type="text" class="layui-input" lay-verify="required" required/>
+            <input name="mainNum" placeholder="请输入主单数" type="text" class="layui-input" lay-verify="number" lay-verify="required" required/>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">明细数<span style="color: red;">*</span></label>
         <div class="layui-input-block">
-            <input name="detailNum" placeholder="请输入明细数" type="text" class="layui-input" lay-verify="required" required/>
+            <input name="detailNum" placeholder="请输入明细数" type="text" class="layui-input" lay-verify="number" lay-verify="required" required/>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">出院诊断数<span style="color: red;">*</span></label>
         <div class="layui-input-block">
-            <input id="hasDischargeNum" name="hasDischargeNum" placeholder="请输入出院诊断数" type="text" class="layui-input" lay-verify="required" required/>
+            <input id="hasDischargeNum" name="hasDischargeNum" placeholder="请输入出院诊断数" type="text" class="layui-input" lay-verify="number" lay-verify="required" required/>
         </div>
     </div>
     <div class="layui-form-item">
@@ -51,9 +51,9 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">是否连续<span style="color: red;">*</span></label>
+        <label class="layui-form-label">连续情况</label>
         <div class="layui-input-block">
-            <select id="continuationSelect" name="continuationId"></select>
+            <textarea id="continuation" name="continuation" style="height:100px" class="layui-input"></textarea>
         </div>
     </div>
     <div class="layui-form-item text-right">

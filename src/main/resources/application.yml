@@ -4,7 +4,6 @@ server:
 
 guns:
   file-upload-path: /Users/localadmin/workspace/cis/ApplicationForm/upload
-#C:\wangyao\temp\upload
   swagger-open: true                #是否开启swagger (true/false)
   kaptcha-open: false               #是否开启登录时验证码 (true/false)
   spring-session-open: false        #是否开启spring session,如果是多机环境需要开启(true/false)
@@ -40,4 +39,4 @@ mybatis-plus:
   mapper-locations: classpath:cn/stylefeng/guns/modular/**/mapping/*.xml
 
 log:
-  path: guns-logs
+  path: application-form-logs

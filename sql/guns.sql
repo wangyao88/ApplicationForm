@@ -570,7 +570,7 @@ CREATE TABLE `business_statistic`  (
   `medical_treatment` text CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '就医方式 数量',
   `begin_date` varchar(7) DEFAULT NULL COMMENT '开始日期',
   `end_date` varchar(7) DEFAULT NULL COMMENT '结束日期',
-  `continuation_id` bigint(20) DEFAULT NULL COMMENT '是否连续',
+  `continuation` varchar(200) DEFAULT NULL COMMENT '是否连续',
   `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   `create_user` bigint(20) DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',

@@ -43,15 +43,15 @@ public class ApplicationDetailService extends ServiceImpl<ApplicationDetailMappe
     @Transactional(rollbackFor = ServiceException.class)
     public void batchSave(ApplicationDetail applicationDetail) {
         String content = applicationDetail.getContent();
-        String[] dateNumArr = content.split(",");
+        String[] dateNumArr = content.split("\n");
         for (String dateNum : dateNumArr) {
             String[] split = dateNum.split(":");
-            String date = split[0];
+            String date = split[0].trim();
             if(!statisticService.isDate(date)) {
                 throw new ServiceException(403, date+"为非法日期格式（正确格式为xxxx-xx）");
             }
             applicationDetail.setDetailDate(date);
-            String num = split[1];
+            String num = split[1].trim();
             try {
                 applicationDetail.setNum(Long.valueOf(num));
             } catch (NumberFormatException e) {

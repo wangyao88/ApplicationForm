@@ -70,12 +70,7 @@ public class StatisticDto implements Serializable {
     /**
      * 是否连续(字典) CONTINUATION 连续 不连续
      */
-    private Long continuationId;
-
-    /**
-     * 是否连续(字典)
-     */
-    private String continuationName;
+    private String continuation;
 
     /**
      * 创建人

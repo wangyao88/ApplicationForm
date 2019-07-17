@@ -27,7 +27,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
             {field: 'medicalTreatment', sort: true, title: '就医方式 数量'},
             {field: 'beginDate', sort: true, title: '开始日期'},
             {field: 'endDate', sort: true, title: '结束日期'},
-            {field: 'continuationName', sort: true, title: '是否连续'},
+            {field: 'continuation', sort: true, title: '连续情况'},
             {field: 'createUserName', sort: true, title: '创建者'},
             {align: 'center', toolbar: '#tableBar', title: '操作', minWidth: 200}
         ]];

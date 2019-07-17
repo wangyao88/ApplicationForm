@@ -79,8 +79,8 @@ public class Statistic implements Serializable {
     /**
      * 是否连续(字典) CONTINUATION 连续 不连续
      */
-    @TableField("continuation_id")
-    private Long continuationId;
+    @TableField("continuation")
+    private String continuation;
 
     @TableField(exist = false)
     private List<ApplicationDetail> applicationDetails = Lists.newArrayList();

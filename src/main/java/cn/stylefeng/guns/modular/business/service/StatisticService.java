@@ -127,7 +127,7 @@ public class StatisticService extends ServiceImpl<StatisticMapper, Statistic> {
                 String[] split = begin.split(StringUtils.SPACE);
                 String dateRange = split[0];
                 String continuation = split[1].trim();
-                statistic.setContinuationId(ConstantFactory.me().getDictByName(continuation));
+//                statistic.setContinuationId(ConstantFactory.me().getDictByName(continuation));
                 String[] ranges = dateRange.split("-");
                 statistic.setBeginDate(convertDate(ranges[0]));
                 statistic.setEndDate(convertDate(ranges[1]));
@@ -141,7 +141,7 @@ public class StatisticService extends ServiceImpl<StatisticMapper, Statistic> {
         String filtedEnd = details.get(filtedSize == 1 ? 0 : filtedSize-1);
         statistic.setBeginDate(filtedBegin);
         statistic.setEndDate(filtedEnd);
-        statistic.setContinuationId(checkContinuation(filtedBegin, filtedEnd, details));
+//        statistic.setContinuationId(checkContinuation(filtedBegin, filtedEnd, details));
     }
 
     private String convertDate(String range) {
