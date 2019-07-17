@@ -64,7 +64,7 @@ public class ApplicationFormWrapper extends BaseControllerWrapper {
         Long receiveUser = DecimalUtil.getLong(map.get("receiveUser"));
         map.put("receiveUserName", ConstantFactory.me().getUserNameById(receiveUser));
         Long projectId = DecimalUtil.getLong(map.get("projectId"));
-        map.put("projectTitle", ConstantFactory.me().getProjectTitle(projectId));
+        map.put("projectTitle", ConstantFactory.me().getProjectTitleWithProvinceName(projectId));
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Timestamp applicationTime = (Timestamp) map.get("applicationTime");

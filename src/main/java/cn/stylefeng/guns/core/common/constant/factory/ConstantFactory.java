@@ -27,6 +27,7 @@ import cn.stylefeng.guns.modular.business.entity.Project;
 import cn.stylefeng.guns.modular.business.entity.Province;
 import cn.stylefeng.guns.modular.business.mapper.ProjectMapper;
 import cn.stylefeng.guns.modular.business.mapper.ProvinceMapper;
+import cn.stylefeng.guns.modular.business.model.ProjectProvinceDto;
 import cn.stylefeng.guns.modular.system.entity.*;
 import cn.stylefeng.guns.modular.system.mapper.*;
 import cn.stylefeng.guns.modular.system.model.DictDto;
@@ -34,7 +35,6 @@ import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.Joiner;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.DependsOn;
@@ -404,5 +404,13 @@ public class ConstantFactory implements IConstantFactory {
     @Override
     public Long getDictByName(String name) {
         return dictMapper.getDictByName(name).getDictId();
+    }
+
+    @Override
+    public String getProjectTitleWithProvinceName(Long projectId) {
+        ProjectProvinceDto projectProvinceDto = projectMapper.getProvincePidByProjectId(projectId);
+        String parentName = projectProvinceDto.getParentName();
+        parentName = StringUtils.isBlank(parentName) ? StringUtils.EMPTY : parentName;
+        return Joiner.on(StringUtils.EMPTY).join(parentName, projectProvinceDto.getFullName(), projectProvinceDto.getTitle());
     }
 }

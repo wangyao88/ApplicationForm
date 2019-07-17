@@ -28,7 +28,16 @@
         order by create_time DESC
     </select>
 
-    <select id="allProject" resultType="cn.stylefeng.guns.modular.business.model.ProjectSimpleDto">
-        select project_id AS "projectId", title AS "title" from business_project order by create_time DESC
+    <select id="allProject" resultType="cn.stylefeng.guns.modular.business.model.ProjectProvinceDto">
+        select c.projectId, c.title as title, d.full_name as parentName, c.full_name as fullName from
+            (select a.project_id as projectId, a.title as title, b.pid as pid, b.full_name as full_name from business_project a
+              left join business_province b on a.province_id=b.province_id) c
+              left join business_province d on c.pid=d.province_id
+    </select>
+
+    <select id="getProvincePidByProjectId" resultType="cn.stylefeng.guns.modular.business.model.ProjectProvinceDto">
+        select c.title as title, d.full_name as parentName, c.full_name as fullName from
+          (select b.title as title, a.pid as pid, a.full_name as full_name from business_province a left join business_project b on a.province_id=b.province_id
+           where b.project_id=#{projectId}) c left join business_province d on c.pid=d.province_id
     </select>
 </mapper>

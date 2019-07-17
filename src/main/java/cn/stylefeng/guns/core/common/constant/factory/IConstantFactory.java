@@ -166,4 +166,6 @@ public interface IConstantFactory {
     Long getDictByCode(String code);
 
     Long getDictByName(String name);
+
+    String getProjectTitleWithProvinceName(Long projectId);
 }

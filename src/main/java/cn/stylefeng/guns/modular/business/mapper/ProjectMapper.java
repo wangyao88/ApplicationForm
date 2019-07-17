@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.modular.business.mapper;
 
 import cn.stylefeng.guns.modular.business.entity.Project;
+import cn.stylefeng.guns.modular.business.model.ProjectProvinceDto;
 import cn.stylefeng.guns.modular.business.model.ProjectSimpleDto;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -24,5 +25,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
      */
     Page<Map<String, Object>> list(@Param("page") Page page, @Param("condition") String condition);
 
-    List<ProjectSimpleDto> allProject();
+    List<ProjectProvinceDto> allProject();
+
+    ProjectProvinceDto getProvincePidByProjectId(@Param("projectId") Long projectId);
 }
