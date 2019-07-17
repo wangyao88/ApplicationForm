@@ -20,8 +20,7 @@ layui.use(['table', 'admin', 'ax', 'ztree'], function () {
      */
     Province.initColumn = function () {
         return [[
-            {type: 'checkbox'},
-            {field: 'provinceId', hide: true, sort: true, title: 'id'},
+            {field: 'provinceId', sort: true, title: '省市编号'},
             {field: 'simpleName', sort: true, title: '省市简称'},
             {field: 'fullName', sort: true, title: '省市全称'},
             {field: 'sort', sort: true, title: '排序'},

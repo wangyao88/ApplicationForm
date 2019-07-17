@@ -18,7 +18,6 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
      */
     ApplicationForm.initColumn = function () {
         return [[
-            {type: 'checkbox'},
             {field: 'applicationFormId', sort: true, title: '编号'},
             {field: 'applicationFormTypeName', sort: true, title: '申请单类型'},
             {field: 'applicationUserName', sort: true, title: '申请人'},

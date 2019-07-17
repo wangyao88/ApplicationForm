@@ -18,8 +18,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
      */
     Project.initColumn = function () {
         return [[
-            {type: 'checkbox'},
-            {field: 'projectId', hide: true, sort: true, title: 'id'},
+            {field: 'projectId', sort: true, title: '项目编号'},
             {field: 'title', sort: true, title: '名称'},
             {field: 'provinceName', sort: true, title: '省市'},
             {field: 'createrName', sort: true, title: '创建者'},

@@ -18,8 +18,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
      */
     Statistic.initColumn = function () {
         return [[
-            {type: 'checkbox'},
-            {field: 'statisticId', hide: true, sort: true, title: 'id'},
+            {field: 'statisticId', sort: true, title: '统计信息编号'},
             {field: 'applicationFormId', sort: true, title: '申请单编号'},
             {field: 'provinceName', sort: true, title: '地市'},
             {field: 'mainNum', sort: true, title: '主单数'},

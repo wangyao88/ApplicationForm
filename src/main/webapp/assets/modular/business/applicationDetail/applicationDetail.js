@@ -13,8 +13,7 @@ layui.use(['table', 'ax'], function () {
      */
     ApplicationDetail.initColumn = function () {
         return [[
-            {type: 'checkbox'},
-            {field: 'applicationDetailId', hide: true, title: '统计信息明细ID'},
+            {field: 'applicationDetailId', title: '明细信息编号'},
             {field: 'statisticId', hide: true, title: '统计信息ID'},
             {field: 'detailDate', sort: true, title: '日期'},
             {field: 'num', sort: true, title: '数量'},
